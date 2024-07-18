@@ -7,10 +7,10 @@ tags: ["dev", "lab"]
 ---
 
 ## Exploring Terminal App Development
-As a system engineer, we are always looking for ways to streamline the workflow and make system monitoring more efficient. Recently, I decided to dive into the world of terminal applications. This journey led me to create UtiBat, a simple CLI tool to monitor laptop battery status.
+As a system engineer, streamlining workflows and optimizing system monitoring are key goals. Recently, I ventured into terminal applications and created UtiBat, a CLI tool for monitoring laptop battery status.
 
 ### Why Terminal Apps?
-Terminal applications are powerful tools that can simplify many tasks for system engineers and power users. They offer a lightweight, efficient way to interact with the system without the overhead of a graphical user interface. Plus, building terminal apps can be a great way to improve your command-line skills and learn more about system internals.
+Terminal applications offer a lightweight and efficient way to interact with your system. They bypass the overhead of graphical user interfaces, providing a streamlined approach that's perfect for system engineers and power users. Additionally, building terminal apps can enhance your command-line skills and deepen your understanding of system internals.
 
 **The Idea Behind UtiBat**:
 I wanted a quick and easy way to see my battery percentage without leaving the command line.
@@ -19,59 +19,109 @@ To build UtiBat, I used **Python** along with a few essential libraries:
 
 - Click: For creating command-line commands.
 - Psutil: For accessing system battery information.
-- Colorama: For adding color to the terminal output.
+- Rich: For advanced terminal output formatting.
 
 ### Understanding Click
-Click is a Python package that simplifies the creation of command-line interfaces. It is highly configurable and user-friendly, making it an excellent choice for building CLI tools. With Click, you can easily define commands, handle arguments, and create complex command structures with minimal code. In UtiBat, Click is used to define the battery command, which displays the battery percentage and progress bar. The @click.group() decorator is used to group commands, while the @cli.command() decorator defines individual commands within the group. This modular approach makes the code clean and easy to maintain.
+Click is a Python package that makes creating command-line interfaces straightforward. It allows you to define commands, handle arguments, and structure complex command-line applications with ease. In UtiBat, Click is used to define the cli command, which displays detailed battery information, including a progress bar and status updates.
 
 ### Leveraging Psutil
-Psutil is a cross-platform library for accessing system details and process utilities. It provides an interface for retrieving information on system utilization (CPU, memory, disks, network, sensors) and running processes. In UtiBat, Psutil is used to access the battery information through the psutil.sensors_battery() function. This function returns the battery status, including the current percentage, which is then used to display the battery level and progress bar. Psutil is a powerful tool, offering a wide range of functionalities to monitor and manage system resources effectively. 
+Psutil is a cross-platform library for retrieving system details such as CPU usage, memory, disks, and more. For UtiBat, Psutil’s psutil.sensors_battery() function is used to get battery information, including percentage, charging status, and time remaining. Psutil's flexibility makes it an invaluable tool for system monitoring.
 
-Here’s a step-by-step guide to creating UtiBat.
+### Rich for Enhanced Output
+Rich is a Python library for rich text and beautiful formatting in the terminal. It provides capabilities for creating progress bars, panels, and other advanced terminal outputs. In UtiBat, Rich is used to create a visually appealing progress bar and formatted output with color-coded status updates.
 
-## Getting started
+## Step-by-Step Guide to Creating UtiBat
 ### Step 1: Setting Up the Environment
 First, ensure you have Python installed on your system. Then, install the required libraries:
 
 ```bash title="Terminal"
-pip install click psutil colorama
+pip install click psutil rich
 ```
 
 ### Step 2: Writing the Code
-Next, I wrote the code for UtiBat. The main components include functions to get the battery percentage, print a progress bar, and define the CLI commands.
+Next, I wrote the code for UtiBat. The main components include functions to get the detailed battery information, including percentage, progress bar, status, and estimated time left.
 
 ```python title="Python"
 import click
 import psutil
-from colorama import Fore, Style
+from rich.console import Console
+from rich.panel import Panel
+from rich.progress import Progress, BarColumn, SpinnerColumn
+import datetime
 
-def get_battery_percentage():
+console = Console()
+
+def get_battery_info():
     battery = psutil.sensors_battery()
-    return battery.percent if battery else None
+    return battery if battery else None
 
-def print_progress_bar(percentage):
-    length = 20
-    filled_length = int(length * percentage / 100)
-    bar = f"[{'#' * filled_length}{'-' * (length - filled_length)}]"
-    return bar
-
-@click.group()
-def cli():
-    pass
-
-@cli.command()
-def battery():
-    percentage = get_battery_percentage()
-    if percentage is not None:
-        color = Fore.GREEN if percentage >= 80 else Fore.YELLOW
-        formatted_percentage = f"{percentage}%".rjust(4)
-        click.echo(f"{color}Battery Percentage: {formatted_percentage}{Style.RESET_ALL}")
-        click.echo(print_progress_bar(percentage))
+def format_time(seconds):
+    if seconds == psutil.POWER_TIME_UNLIMITED:
+        return "Unlimited"
+    elif seconds == psutil.POWER_TIME_UNKNOWN:
+        return "Unknown"
     else:
-        click.echo("Battery information not available.")
+        return str(datetime.timedelta(seconds=seconds))
+
+@click.command()
+def cli():
+    """Displays detailed battery information and progress bar."""
+    battery = get_battery_info()
+    if battery is not None:
+        percentage = battery.percent
+        plugged = battery.power_plugged
+        time_left = battery.secsleft
+
+        # Determine color based on battery percentage
+        if percentage >= 80:
+            color = "#4CAF50"  # Green
+        elif percentage >= 30:
+            color = "#FFC107"  # Amber
+        else:
+            color = "#F44336"  # Red
+        
+        formatted_percentage = f"{percentage}%"
+        status = "Plugged In" if plugged else "Not Plugged In"
+        time_left_str = format_time(time_left)
+
+        with Progress(
+            SpinnerColumn(),
+            BarColumn(bar_width=20, complete_style=color, finished_style=color),
+            console=console,
+            transient=True,
+        ) as progress:
+            task = progress.add_task("Battery", total=100)
+            progress.update(task, completed=percentage)
+        
+        progress_bar = ''.join([f'{"█" if i < percentage / 5 else "░"}' for i in range(20)])
+
+        panel_content = f"[{color}]Percentage: {formatted_percentage}[/]\n\n" \
+                        f"[{color}]{progress_bar}[/]\n\n" \
+                        f"[{color}]Status: {status}[/]\n"
+
+        if not plugged:
+            panel_content += f"[{color}]Time Left: {time_left_str}[/]"
+
+        panel = Panel(
+            panel_content,
+            title="Battery Status",
+            border_style=color,
+            style=color,
+            width=40,  # Set the width of the panel
+        )
+        
+        console.print(panel)
+    else:
+        console.print(Panel(
+            "[bold red]Battery information not available.[/bold red]",
+            title="Error",
+            border_style="red",
+            expand=False
+        ))
 
 if __name__ == '__main__':
     cli()
+
 
 ```
 
@@ -86,9 +136,9 @@ pip install utibat
 ```
 ### Usage: 
 ```bash title="Terminal"
-utibat battery
+utibat
 ```
-This will display the current battery percentage along with a progress bar.
+This command will display detailed battery information, including percentage, progress bar, status, and estimated time left.
 
 ### Example Output:
 ![Utibat Output](./utibat.png)
