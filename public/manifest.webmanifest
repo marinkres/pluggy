@@ -1,7 +1,7 @@
 {
 	"name": "Pluggy Blog",
-	"short_name": "Astro_Cactus",
-	"description": "Starter blog site for Astro",
+	"short_name": "Blog",
+	"description": "Pluggy Blog",
 	"icons": [
 		{
 			"src": "/192x192.png",
