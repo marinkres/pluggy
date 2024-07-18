@@ -95,6 +95,6 @@ This will display the current battery percentage along with a progress bar.
 
 Or 
 
-Check the [Github link](https://markdown-it.github.io/) and the [PyPI documentation](https://markdown-it.github.io/).
+Check the [Github link](https://github.com/marinkres/utibat) and the [PyPI documentation](https://pypi.org/project/utibat/).
 
 
