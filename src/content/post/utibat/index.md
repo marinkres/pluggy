@@ -1,8 +1,8 @@
 ---
 title: "Exploring CLI tool development: Utibat"
 description: "As a system engineer, I’m always looking for ways to streamline my workflow and make system monitoring more efficient. "
-publishDate: "8 apr 2024"
-updatedDate: 8 apr 2024
+publishDate: "16 jul 2024"
+updatedDate: 16 jul 2024
 tags: ["dev", "lab"]
 ---
 

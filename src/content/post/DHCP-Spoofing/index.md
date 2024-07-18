@@ -1,8 +1,8 @@
 ---
 title: "DHCP Spoofing attack: Understanding the Threat"
 description: "Spoofing attacks are a common form of cybercrime where attackers manipulate communication channels by pretending to be someone they are not."
-publishDate: "8 apr 2024"
-updatedDate: 8 apr 2024
+publishDate: "18 jul 2024"
+updatedDate: 18 jul 2024
 tags: ["cybersecurity", "lab", "networks"]
 ---
 

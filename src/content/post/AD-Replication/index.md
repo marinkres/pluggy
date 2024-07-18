@@ -1,9 +1,9 @@
 ---
 title: "Disrupting and Repairing Active Directory Replication"
 description: "Disrupting and Repairing Active Directory Replication"
-publishDate: "8 Apr 2024"
+publishDate: "1 jul 2024"
 tags: ["devops", "security", "lab"]
-updatedDate: 8 April 2024
+updatedDate: 1 jul 2024
 ---
 
 ## Introduction
