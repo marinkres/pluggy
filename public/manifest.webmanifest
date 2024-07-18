@@ -1,7 +1,7 @@
 {
 	"name": "Pluggy Blog",
 	"short_name": "Blog",
-	"description": "Pluggy Blog",
+	"description": "Read about my projects and things that interest me.",
 	"icons": [
 		{
 			"src": "/192x192.png",
