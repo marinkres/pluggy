@@ -7,7 +7,7 @@ tags: ["dev", "lab"]
 ---
 
 ## Exploring Terminal App Development
-As a system engineer, I’m always looking for ways to streamline my workflow and make system monitoring more efficient. Recently, I decided to dive into the world of terminal applications. This journey led me to create UtiBat, a simple CLI tool to monitor laptop battery status.
+As a system engineer, we are always looking for ways to streamline the workflow and make system monitoring more efficient. Recently, I decided to dive into the world of terminal applications. This journey led me to create UtiBat, a simple CLI tool to monitor laptop battery status.
 
 ### Why Terminal Apps?
 Terminal applications are powerful tools that can simplify many tasks for system engineers and power users. They offer a lightweight, efficient way to interact with the system without the overhead of a graphical user interface. Plus, building terminal apps can be a great way to improve your command-line skills and learn more about system internals.
