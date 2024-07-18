@@ -13,7 +13,7 @@ As a system engineer, I’m always looking for ways to streamline my workflow an
 Terminal applications are powerful tools that can simplify many tasks for system engineers and power users. They offer a lightweight, efficient way to interact with the system without the overhead of a graphical user interface. Plus, building terminal apps can be a great way to improve your command-line skills and learn more about system internals.
 
 **The Idea Behind UtiBat**:
-The inspiration for UtiBat came from my frequent need to check my laptop’s battery status while working in the terminal. I wanted a quick and easy way to see my battery percentage without leaving the command line.
+I wanted a quick and easy way to see my battery percentage without leaving the command line.
 
 To build UtiBat, I used **Python** along with a few essential libraries:
 
