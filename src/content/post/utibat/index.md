@@ -65,20 +65,18 @@ def format_time(seconds):
 
 @click.command()
 def cli():
-    """Displays detailed battery information and progress bar."""
     battery = get_battery_info()
     if battery is not None:
         percentage = battery.percent
         plugged = battery.power_plugged
         time_left = battery.secsleft
 
-        # Determine color based on battery percentage
         if percentage >= 80:
-            color = "#4CAF50"  # Green
+            color = "#4CAF50"  
         elif percentage >= 30:
-            color = "#FFC107"  # Amber
+            color = "#FFC107"  
         else:
-            color = "#F44336"  # Red
+            color = "#F44336"  
         
         formatted_percentage = f"{percentage}%"
         status = "Plugged In" if plugged else "Not Plugged In"
@@ -107,7 +105,7 @@ def cli():
             title="Battery Status",
             border_style=color,
             style=color,
-            width=40,  # Set the width of the panel
+            width=40,  
         )
         
         console.print(panel)
