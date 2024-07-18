@@ -153,7 +153,7 @@ Right aligned columns
 
 Image in the same folder: `src/content/post/markdown-elements/logo.png`
 
-![Astro theme cactus logo](./dhcp/one.png)
+![Astro theme cactus logo](./DHCP-Spoofing/one.png)
 
 ## Links
 
