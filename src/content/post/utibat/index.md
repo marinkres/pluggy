@@ -21,13 +21,35 @@ To build UtiBat, I used **Python** along with a few essential libraries:
 - Psutil: For accessing system battery information.
 - Rich: For advanced terminal output formatting.
 
-### Understanding Click
+## Running UtiBat
+
+>To use UtiBat in **local development**, simply run the following command in your terminal: python utibat.py battery
+
+
+To install the latest version of UtiBat you can use pip:
+```bash title="Terminal"
+pip install utibat
+```
+### Usage: 
+```bash title="Terminal"
+utibat
+```
+This command will display detailed battery information, including percentage, progress bar, status, and estimated time left.
+
+### Example Output:
+![Utibat Output](./utibat.png)
+
+Or 
+
+Check the [Github link](https://github.com/marinkres/utibat) and the [PyPI documentation](https://pypi.org/project/utibat/).
+
+## Understanding Click
 Click is a Python package that makes creating command-line interfaces straightforward. It allows you to define commands, handle arguments, and structure complex command-line applications with ease. In UtiBat, Click is used to define the cli command, which displays detailed battery information, including a progress bar and status updates.
 
-### Leveraging Psutil
+## Leveraging Psutil
 Psutil is a cross-platform library for retrieving system details such as CPU usage, memory, disks, and more. For UtiBat, Psutil’s psutil.sensors_battery() function is used to get battery information, including percentage, charging status, and time remaining. Psutil's flexibility makes it an invaluable tool for system monitoring.
 
-### Rich for Enhanced Output
+## Rich for Enhanced Output
 Rich is a Python library for rich text and beautiful formatting in the terminal. It provides capabilities for creating progress bars, panels, and other advanced terminal outputs. In UtiBat, Rich is used to create a visually appealing progress bar and formatted output with color-coded status updates.
 
 ## Step-by-Step Guide to Creating UtiBat
@@ -123,26 +145,5 @@ if __name__ == '__main__':
 
 ```
 
-## Running UtiBat
-
->To use UtiBat in **local development**, simply run the following command in your terminal: python utibat.py battery
-
-
-To install the latest version of UtiBat you can use pip:
-```bash title="Terminal"
-pip install utibat
-```
-### Usage: 
-```bash title="Terminal"
-utibat
-```
-This command will display detailed battery information, including percentage, progress bar, status, and estimated time left.
-
-### Example Output:
-![Utibat Output](./utibat.png)
-
-Or 
-
-Check the [Github link](https://github.com/marinkres/utibat) and the [PyPI documentation](https://pypi.org/project/utibat/).
 
 
