@@ -10,7 +10,7 @@ tags: ["cybersecurity", "lab", "linux"]
 Privilege escalation, also known as Elevation of Privilege (EoP), refers to a situation where a user gains privileges they are not authorized to have. In the context of computer security, this often means a regular user obtaining administrative or root privileges, allowing them to perform actions that could compromise the security or stability of the system. EoP exploits can arise from software vulnerabilities, configuration errors, or design flaws.
 
 ### CVE-2019-12735: A Real-World Example
-CVE-2019-12735 is a notable example of a vulnerability in the Vim and Neovim text editors that could be exploited for privilege escalation. This vulnerability arose from improper handling of modelines, special lines in a text file that can set editor options. An attacker could craft a text file with malicious modelines that, when opened in Vim or Neovim, could execute arbitrary commands with the privileges of the user running the editor. If the editor was run with elevated privileges (e.g., using sudo), the commands would execute with those elevated privileges, leading to a potential compromise of the system.
+ [CVE-2019-12735](https://www.exploit-db.com/exploits/46973) is a notable example of a vulnerability in the Vim and Neovim text editors that could be exploited for privilege escalation. This vulnerability arose from improper handling of modelines, special lines in a text file that can set editor options. An attacker could craft a text file with malicious modelines that, when opened in Vim or Neovim, could execute arbitrary commands with the privileges of the user running the editor. If the editor was run with elevated privileges (e.g., using sudo), the commands would execute with those elevated privileges, leading to a potential compromise of the system.
 
 ## Demonstration 
 
@@ -32,37 +32,30 @@ _Figure 1._
 ![Sudo vim](./two.png)
 _Figure 2._
 
+![Sudo vim](./three.png)
+_Figure 3._
+
 2. Execute the Shell Command in Vim:
 
     - Press the ESC key to ensure you are in command mode.
     - Then, type the following (without the quotes): **:!/bin/bash** as shown in Figure 2: Vim editor opened and command entered to launch terminal shell.
     - Press ENTER.
 
-![Sudo vim](./three.png)
-_Figure 3._
+
 
 Expected Result
 
-You will see that your privileges have successfully been elevated to the root user, as depicted in Figure 3: Successfully elevated privileges to the root user.
+You will see that your privileges have successfully been elevated to the root user, as depicted in Figure 3.
 
 ## How And Why It Works
-- **Inheriting Privileges**: When a process is started with sudo, it runs with the permissions of the root user. Any subprocess or command executed by this process will also run with the same elevated privileges.
-- **Vim's Shell Command Feature**: Vim allows users to execute shell commands from within the editor using the :! command. This feature is intended for convenience, allowing users to run shell commands without leaving the editor.
-- **Misuse Potential**: If vim is started with sudo, the :! command can be misused to start a shell with root privileges. This provides a straightforward way to escalate privileges if the user can run vim with sudo.
+1. **Verification of Sudo Permissions and Starting Vim**:
+By running sudo -l, we confirm that the user has permission to run Vim with sudo. When sudo vim is executed, the Vim process starts with root privileges due to the sudo command.
 
-During the demonstration, the following sequence of actions and underlying mechanisms occur:
+2. **Executing Shell Commands within Vim**:
+Vim allows users to execute shell commands from within the editor using the :! command. Inside Vim, the command :!/bin/bash is entered. The :! command in Vim runs a shell command, and since Vim is running with root privileges, the command executed (in this case, /bin/bash) inherits those privileges.
 
-1. Verification of Sudo Permissions:
-By running sudo -l, we confirm that the HNUser has permission to run vim with sudo.
-
-2. Starting Vim with Root Privileges:
-When sudo vim is executed, the vim process starts with root privileges due to the sudo command.
-
-3. Launching a Root Shell from Vim:
-Inside vim, the command :!/bin/bash is entered. The :! command in vim runs a shell command, and since vim is running with root privileges, the command executed (in this case, /bin/bash) inherits those privileges.
-
-4. Resulting Root Shell:
-The result is a root shell because the shell command executed from within vim is done with the same elevated privileges that vim has, which were granted by sudo.
+3. **Resulting Root Shell**:
+The result is a root shell because the shell command executed from within Vim is done with the same elevated privileges that Vim has, which were granted by sudo. This misuse potential demonstrates how running Vim with sudo can straightforwardly escalate privileges if the user has permission to run Vim with sudo.
 
 ## Mitigation Strategies
 The specific vulnerability CVE-2019-12735 in Vim and Neovim was patched. After the discovery of this vulnerability, the developers of Vim and Neovim released updates to address the issue. Users should update their versions of Vim and Neovim to ensure they are not susceptible to this exploit. Here’s a summary of the mitigation steps to take:
