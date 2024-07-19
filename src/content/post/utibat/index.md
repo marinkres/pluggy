@@ -1,9 +1,9 @@
 ---
 title: "Exploring CLI tool development: Utibat"
 description: "As a system engineer, I’m always looking for ways to streamline my workflow and make system monitoring more efficient. "
-publishDate: "16 jul 2024"
-updatedDate: 16 jul 2024
-tags: ["dev", "lab"]
+publishDate: "19 jul 2024"
+updatedDate: 19 jul 2024
+tags: ["dev", "lab", "python"]
 ---
 
 ## Exploring Terminal App Development
@@ -30,13 +30,13 @@ To install the latest version of UtiBat you can use pip:
 ```bash title="Terminal"
 pip install utibat
 ```
-### Usage: 
+### Usage 
 ```bash title="Terminal"
 utibat
 ```
 This command will display detailed battery information, including percentage, progress bar, status, and estimated time left.
 
-### Example Output:
+### Example Output
 ![Utibat Output](./utibat.png)
 
 Or 
