@@ -2,6 +2,7 @@
 import aboutImg from "@/assets/about-astro.png";
 import PageLayout from "@/layouts/Base.astro";
 import { Image } from "astro:assets";
+import SocialList from "@/components/SocialList.astro";
 
 const meta = {
 	description: "I'm a starter theme for Astro.build",
@@ -24,5 +25,6 @@ const meta = {
 				target="_blank">here</a
 			> via email.
 		</p>
+		<SocialList />
 	</div>
 </PageLayout>
