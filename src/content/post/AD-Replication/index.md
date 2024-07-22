@@ -1,6 +1,6 @@
 ---
 title: "Disrupting and Repairing Active Directory Replication"
-description: "Disrupting and Repairing Active Directory Replication"
+description: "Objective: Disrupt synchronization between two Active Directory domain controllers (both running Windows Server 2019) and then fix it."
 publishDate: "1 jul 2024"
 tags: ["devops", "cybersecurity", "lab"]
 updatedDate: 1 jul 2024
