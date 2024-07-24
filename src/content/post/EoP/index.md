@@ -2,7 +2,7 @@
 title: "Elevation of Privilege (EoP) using Vim"
 description: "Privilege escalation, also known as Elevation of Privilege (EoP), refers to a situation where a user gains privileges they are not authorized to have."
 publishDate: "20 jul 2024"
-updatedDate: 20 jul 2024
+updatedDate: 23 jul 2024
 tags: ["cybersecurity", "lab", "linux"]
 ---
 
