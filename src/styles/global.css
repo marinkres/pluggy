@@ -32,4 +32,7 @@
 	body {
 		@apply mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
 	}
+	.tag {
+		@apply bg-accent text-bgColor rounded-lg px-1 py-0.5 no-underline;
+	}
 }
