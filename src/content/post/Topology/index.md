@@ -1,5 +1,5 @@
 ---
-title: "GNS3 Cybersecurity Lab Setup - NGFW.1"
+title: "NGFW.1 - GNS3 Cybersecurity Lab Setup"
 description: "We'll cover the essential steps for configuring routing and other fundamental settings to ensure a smooth and functional virtual lab."
 publishDate: "27 jul 2024"
 updatedDate: 27 jul 2024
