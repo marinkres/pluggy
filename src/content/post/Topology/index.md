@@ -1,5 +1,5 @@
 ---
-title: "NGFW.1 - GNS3 Cybersecurity Lab Setup"
+title: "NGFW.1 - GNS3 Lab Setup (Topology, Routing, NAT)"
 description: "We'll cover the essential steps for configuring routing and other fundamental settings to ensure a smooth and functional virtual lab."
 publishDate: "27 jul 2024"
 updatedDate: 27 jul 2024
@@ -8,11 +8,13 @@ tags: ["cybersecurity", "networks", "lab", "NGFW"]
 
 ## Introduction 
 ### Setting Up a Virtual Lab for Cybersecurity Projects
-This is the first installment of our project series (NGFW) on Next-Generation Firewalls. As cybersecurity threats continue to evolve, so must our defenses. We'll dive deep into the capabilities and configurations of next-generation firewalls and other security principles, helping you stay ahead in the constantly changing landscape of network security.
+This is the first installment of NGFW project series on Next-Generation Firewalls. As cybersecurity threats continue to evolve, so must our defenses. Looking deep into the capabilities and configurations of next-generation firewalls and other security principles, helping you and me stay ahead in the constantly changing world of network security.
 
-Before we can explore the sophisticated features of NGFWs, we need a robust and flexible virtual environment. This initial blog post will guide you through setting up a comprehensive network topology using **VMware workstation pro 17** and **GNS3**. 
+Before we can explore the sophisticated features of NGFWs, we need a robust and flexible virtual environment. This initial post will guide you through setting up a solid network topology using **VMware workstation pro 17** and **GNS3**. 
 
-We'll cover the essential steps for configuring routing and other fundamental settings to ensure a smooth and functional virtual lab. By the end of this guide, you'll have a solid foundation to build upon as we delve into advanced firewall configurations and security strategies in the upcoming posts.
+We'll cover the essential steps for configuring routing and other fundamental settings to ensure a smooth and functional virtual lab. By the end of this guide, you'll have a solid foundation to build upon as we look into advanced firewall configurations and security strategies in the upcoming posts.
+
+This Lab series assumes that you have at least some basic knowledge of Networking and Computers in general.
 
 ## The topology
 This topology serves as the foundational environment for our next posts. Let's break down each component and understand how they interconnect to create a comprehensive network simulation.
@@ -145,14 +147,14 @@ In our FortiGate7.4-LJ firewall setup, we use administrative distance to manage 
 #### FortiGate7.4-LJ Firewall Routing Configuration
 To illustrate these concepts, let's examine the specific routing configuration on the FortiGate7.4-LJ firewall.
 
-1. Primary Route Configuration:
+1. **Primary Route** Configuration:
 
 - Destination: 0.0.0.0/0
 - Gateway Address: 192.168.37.2
 - Interface: WAN_primarni (port1)
 - Administrative Distance: 10
 
-2. Backup Route Configuration:
+2. **Backup Route** Configuration:
 
 - Destination: 0.0.0.0/0
 - Gateway Address: 192.168.84.2
@@ -166,7 +168,7 @@ The backup route serves as a fallback, directing traffic through the backup WAN 
 ### FortiGate7.4-SB Firewall Routing Configuration
 In our FortiGate7.4-SB firewall, we have a crucial static route configured to manage outbound traffic efficiently. There is no backup route configured for this segment.
 
-Static Route Details:
+**Static Route** Details:
 
 - Destination: 0.0.0.0/0
 - Gateway Address: 192.168.37.2
@@ -211,7 +213,93 @@ Another way to configure Mikrotik routers is to use their GUI interface with the
 
 ### Firewall Policy Configuration
 
+In our network setup, we have configured specific firewall policies on the FortiGate-LJ and FortiGate-SB firewalls to ensure proper traffic management and security. Below is an explanation of these policies.
 
-TO BE CONTINUED AND EDITED
+#### FortiGate-LJ Policies
 
+The FortiGate-LJ firewall has the following policies configured:
 
+1. **LAN-LJ-primary**
+   - **From**: LAN-LJ (port3)
+   - **To**: WAN_primarni (port1)
+   - **Source**: LAN-LJ
+   - **Destination**: all
+   - **Schedule**: always
+   - **Service**: ALL
+   - **Action**: ACCEPT
+   - **NAT**: Enabled
+
+   This policy allows all traffic from the LAN-LJ network to the primary WAN interface. NAT is enabled to translate the internal IP addresses to the external IP address for internet access.
+
+2. **LAN-LJ-backup**
+   - **From**: LAN-LJ (port3)
+   - **To**: WAN-backup (port4)
+   - **Source**: LAN-LJ
+   - **Destination**: all
+   - **Schedule**: always
+   - **Service**: ALL
+   - **Action**: ACCEPT
+   - **NAT**: Enabled
+
+   This policy serves as a backup route, allowing traffic from the LAN-LJ network to the backup WAN interface. NAT is also enabled here to handle IP translation for outbound traffic.
+
+3. **Implicit Deny**
+   - **From**: any
+   - **To**: any
+   - **Source**: all
+   - **Destination**: all
+   - **Schedule**: always
+   - **Service**: ALL
+   - **Action**: DENY
+
+   This is an implicit deny rule that blocks any traffic not explicitly allowed by other policies. It ensures that only permitted traffic can pass through the firewall.
+
+#### FortiGate-SB Policies
+
+The FortiGate-SB firewall has the following policy configured:
+
+1. **LAN-SB-primary**
+   - **From**: LAN-SB (port3)
+   - **To**: WAN_primarni (port1)
+   - **Source**: LAN-SB
+   - **Destination**: all
+   - **Schedule**: always
+   - **Service**: ALL
+   - **Action**: ACCEPT
+   - **NAT**: Enabled
+
+   This policy allows all traffic from the LAN-SB network to the primary WAN interface. NAT is enabled to facilitate IP address translation for internet-bound traffic.
+
+2. **Implicit Deny**
+   - **From**: any
+   - **To**: any
+   - **Source**: all
+   - **Destination**: all
+   - **Schedule**: always
+   - **Service**: ALL
+   - **Action**: DENY
+
+   Similar to the LJ firewall, this implicit deny rule ensures that any traffic not explicitly allowed by other policies is blocked, maintaining network security by default.
+
+### Network Address Translation (NAT)
+
+NAT, or Network Address Translation, is a crucial aspect of firewall configuration and plays an essential role in network security and management. In this network setup, NAT is enabled on both the FortiGate-LJ and FortiGate-SB firewalls for the following purposes:
+
+1. **IP Address Translation**: NAT allows multiple devices on a local network to share a single public IP address when accessing external networks, such as the internet. This is essential for conserving public IP addresses and enhancing security by masking the internal network structure.
+
+2. **Security**: By translating internal IP addresses to a single public IP address (or a few addresses), NAT helps protect the internal network from external threats. External entities see only the public IP address, making it harder for them to target specific devices within the internal network.
+
+3. **Policy Implementation**: In the context of the firewall policies we have configured, NAT ensures that traffic from the internal networks (LAN-LJ and LAN-SB) is properly translated when it leaves the network through the WAN interfaces. This translation is necessary for devices to communicate with external networks and receive responses to their requests.
+
+4. **Backup and Redundancy**: With policies like "LAN-LJ-backup" and the primary and secondary routes configured on the FortiGate-LJ, NAT plays a role in ensuring seamless failover. If the primary WAN interface (WAN_primarni) fails, the backup interface (WAN-backup) can take over, and NAT ensures that internal devices can still reach external networks without manual reconfiguration.
+
+By enabling NAT in the firewall policies, we achieve a streamlined and secure network setup that supports efficient traffic flow and robust security measures.
+
+### Next Topics
+
+In this post, we have set up a complex network topology involving multiple virtual machines, firewalls, and routing configurations to ensure secure and efficient traffic management. 
+
+In the next post, we will dive into advanced networking features and concepts:
+
+- **SD-WAN** (Software-Defined Wide Area Network): How it can optimize and secure WAN connections, providing better performance and flexibility.
+- **FSSO** (Fortinet Single Sign-On): How it integrates with FortiGate firewalls to offer seamless user authentication and network access control.
