@@ -216,6 +216,7 @@ Another way to configure Mikrotik routers is to use their GUI interface with the
 In our network setup, we have configured specific firewall policies on the FortiGate-LJ and FortiGate-SB firewalls to ensure proper traffic management and security. Below is an explanation of these policies.
 
 #### FortiGate-LJ Policies
+![Topology](./policyLJ.png)
 
 The FortiGate-LJ firewall has the following policies configured:
 
@@ -255,6 +256,7 @@ The FortiGate-LJ firewall has the following policies configured:
    This is an implicit deny rule that blocks any traffic not explicitly allowed by other policies. It ensures that only permitted traffic can pass through the firewall.
 
 #### FortiGate-SB Policies
+![Topology](./policySB.png)
 
 The FortiGate-SB firewall has the following policy configured:
 
