@@ -1,6 +1,6 @@
 ---
 title: "NGFW - Full Lab Series on Next Generation Firewalls"
-description: "We'll cover the essential steps for configuring routing and other fundamental settings to ensure a smooth and functional virtual lab."
+description: "Welcome to an in-depth series on network design, traffic management, and security solutions."
 publishDate: "26 jul 2024"
 updatedDate: 26 jul 2024
 tags: ["cybersecurity", "networks", "lab", "NGFW"]

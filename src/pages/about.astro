@@ -20,11 +20,6 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 		title: "Tailwind CSS",
 	},
 	{
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
-		title: "Markdown",
-	},
-	{
 		desc: "Markdown for the component era.",
 		href: "https://mdxjs.com/",
 		title: "MDX",
@@ -54,6 +49,11 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 		href: "https://git-scm.com/",
 		title: "Git",
 	},
+	{
+		desc: "Automatic image compression.",
+		href: "https://imgbot.net/",
+		title: "ImgBot",
+	},
 ];
 ---
 
@@ -71,12 +71,36 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 			Contact me <a
 				aria-label="github repository"
 				class="cactus-link inline-block"
-				href="https://github.com/marinkres"
-				rel="noopener noreferrer"
-				target="_blank">here</a
-			> via email.
+				href="mailto:marinjurekresic@gmail.com"
+                rel="noopener noreferrer"
+                target="_blank">here</a
+            > via email.
 		</p>
 		<SocialList />
+		<!-- Newsletter Form -->
+		<p class="mt-3">Subscribe to my Newsletter:</p>
+		<form
+		  action="https://send.pageclip.co/vaMmsM5j4HWKNApHPy4uAHNhYm06DCal/Newsletter"
+		  class="pageclip-form"
+		  method="post"
+		>
+		  <div class="mb-4 mt-3">
+			<label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+			<input
+			  type="email"
+			  name="email"
+			  id="email"
+			  required
+			  class="mt-1 block w-2/3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+			/>
+		  </div>
+		  <button
+			type="submit"
+			class="pageclip-form__submit tag"
+		  >
+			<span>Subscribe</span>
+		  </button>
+		</form>
 	</section>
 	<section class="mt-16">
 		<h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
@@ -99,3 +123,4 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 		</dl>
 	</section>
 </PageLayout>
+<script src="https://s3.amazonaws.com/pageclip.co/v1/pageclip.js"></script>
