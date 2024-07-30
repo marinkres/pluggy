@@ -73,7 +73,6 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 				class="cactus-link inline-block"
 				href="mailto:marinjurekresic@gmail.com"
                 rel="noopener noreferrer"
-				onsubmit="return handleFormSubmit(event)"
                 target="_blank">here</a
             > via email.
 		</p>
@@ -102,8 +101,7 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 			<span>Subscribe</span>
 		  </button>
 		</form>
-		<p id="confirmation-message" class="mt-3 hidden text-green-500">Thank you for subscribing!</p>
-	</section>
+		</section>
 	
 	<section class="mt-16">
 		<h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
@@ -127,34 +125,3 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 	</section>
 </PageLayout>
 <script src="https://s3.amazonaws.com/pageclip.co/v1/pageclip.js"></script>
-<script>
-	async function handleFormSubmit(event: Event) {
-		event.preventDefault();
-		const form = event.target as HTMLFormElement;
-		const confirmationMessage = document.getElementById('confirmation-message');
-
-		try {
-			const formData = new FormData(form as HTMLFormElement);
-			const response = await fetch((form as HTMLFormElement).action, {
-				method: form.method,
-				body: formData,
-				headers: {
-					'Accept': 'application/json'
-				}
-			});
-
-			if (response.ok) {
-				form.reset();
-				if (confirmationMessage !== null) {
-					confirmationMessage.classList.remove('hidden');
-				}
-			} else {
-				console.error('Form submission failed:', response.statusText);
-			}
-		} catch (error) {
-			console.error('Form submission error:', error);
-		}
-
-		return false;
-	}
-</script>
