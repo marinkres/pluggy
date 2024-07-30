@@ -65,38 +65,43 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 	  </p>
 	</div>
 	<section class="mt-10">
-	  <h1 class="title">Contact</h1>
-	  <p class="mt-8">
-		Contact me <a
-		  aria-label="github repository"
-		  class="cactus-link inline-block"
-		  href="mailto:marinjurekresic@gmail.com"
-		  rel="noopener noreferrer"
-		  target="_blank">here</a
-		> via email.
-	  </p>
-	  <SocialList />
-	  <!-- Newsletter Form -->
-	  <p class="mt-3 ">Subscribe to my <strong>Newsletter:</strong></p>
-	  <form id="newsletter-form" class="pageclip-form" method="post">
-		<div class="mb-4 mt-3">
-		  <label for="email" class="block text-sm font-medium">Email</label>
-		  <input
-			type="email"
-			name="email"
-			id="email"
-			required
-			class="mt-1 block w-2/3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white"
-		  />
-		</div>
-		<button
-		  type="submit"
-		  class="pageclip-form__submit tag"
+		<h1 class="title">Contact</h1>
+		<p class="mt-8">
+			Contact me <a
+				aria-label="github repository"
+				class="cactus-link inline-block"
+				href="mailto:marinjurekresic@gmail.com"
+                rel="noopener noreferrer"
+                target="_blank">here</a
+            > via email.
+		</p>
+		<SocialList />
+		<!-- Newsletter Form -->
+		<p class="mt-3 ">Subscribe to my <strong>Newsletter:</strong></p>
+		<form
+		  action="https://send.pageclip.co/vaMmsM5j4HWKNApHPy4uAHNhYm06DCal/Newsletter"
+		  class="pageclip-form"
+		  method="post"
 		>
-		  <span>Subscribe</span>
-		</button>
-	  </form>
-	</section>
+		  <div class="mb-4 mt-3">
+			<label for="email" class="block text-sm font-medium">Email</label>
+			<input
+			  type="email"
+			  name="email"
+			  id="email"
+			  required
+			  class="mt-1 block w-2/3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white"
+			  />
+		  </div>
+		  <button
+			type="submit"
+			class="pageclip-form__submit tag"
+		  >
+			<span>Subscribe</span>
+		  </button>
+		</form>
+		</section>
+	
 	<section class="mt-16">
 	  <h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
 	  <dl class="space-y-4">
@@ -117,39 +122,5 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 		}
 	  </dl>
 	</section>
-  </PageLayout>
-  
-  <script src="https://s3.amazonaws.com/pageclip.co/v1/pageclip.js"></script>
-  <script>
-	declare var Pageclip: {
-	  form: (
-		form: HTMLFormElement,
-		options: {
-		  onSubmit: () => void,
-		  onResponse: (error: any, response: any) => void,
-		  onError: (error: any) => void
-		}
-	  ) => void;
-	};
-  
-	document.addEventListener("DOMContentLoaded", function() {
-	  const form = document.getElementById("newsletter-form") as HTMLFormElement;
-	  if (form) {
-		form.addEventListener("submit", function(event) {
-		  event.preventDefault();
-		  Pageclip.form(form, {
-			onSubmit: function() { console.log('Submitting...'); },
-			onResponse: function(error: any, response: any) { 
-			  if (error) {
-				console.error('Error:', error);
-			  } else {
-				console.log('Response:', response);
-				alert('Subscribed successfully!');
-			  }
-			},
-			onError: function(error: any) { console.error('Form error:', error); }
-		  });
-		});
-	  }
-	});
-  </script>
+</PageLayout>
+<script src="https://s3.amazonaws.com/pageclip.co/v1/pageclip.js"></script>
