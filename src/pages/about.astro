@@ -91,8 +91,8 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 			  name="email"
 			  id="email"
 			  required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-200 text-black dark:bg-gray-700 dark:text-white"
-			/>
+			  class="mt-1 block w-2/3 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white"
+			  />
 		  </div>
 		  <button
 			type="submit"
@@ -127,18 +127,32 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 </PageLayout>
 <script src="https://s3.amazonaws.com/pageclip.co/v1/pageclip.js"></script>
 <script>
-	function handleFormSubmit(event: Event) {
+    async function handleFormSubmit(event: Event) {
         event.preventDefault();
-        const form = event.target;
+        const form = event.target as HTMLFormElement;
         const confirmationMessage = document.getElementById('confirmation-message');
 
-        // Simulate form submission
-		setTimeout(() => {
-			(form as HTMLFormElement).reset();
-			if (confirmationMessage !== null) {
-				confirmationMessage.classList.remove('hidden');
-			}
-		}, 500);
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                form.reset();
+                if (confirmationMessage !== null) {
+                    confirmationMessage.classList.remove('hidden');
+                }
+            } else {
+                console.error('Form submission failed:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+        }
 
         return false;
     }
