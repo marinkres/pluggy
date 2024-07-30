@@ -55,9 +55,9 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 		title: "ImgBot",
 	},
 	{
-		desc: "Automatic image compression.",
-		href: "https://imgbot.net/",
-		title: "ImgBot",
+		desc: "Newsletter server.",
+		href: "https://pageclip.co/",
+		title: "PageClip",
 	},
 ];
 ---
@@ -76,9 +76,9 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 				aria-label="github repository"
 				class="cactus-link inline-block"
 				href="mailto:marinjurekresic@gmail.com"
-				rel="noopener noreferrer"
-				target="_blank">here</a
-			> via email.
+                rel="noopener noreferrer"
+                target="_blank">here</a
+            > via email.
 		</p>
 		<SocialList />
 		<!-- Newsletter Form -->
@@ -135,39 +135,3 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 	</p>
 </PageLayout>
 <script src="https://s3.amazonaws.com/pageclip.co/v1/pageclip.js"></script>
-<script>
-  async function fetchPageSpeedData() {
-	const apiKey = 'AIzaSyBR3oIlPacDkIccGW9a7DkbtXlzYObxKaU'; // Replace with your PageSpeed Insights API key
-	const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://marink.me&key=${apiKey}`;
-
-	try {
-	  const response = await fetch(url);
-	  const data = await response.json();
-	  displayPageSpeedData(data);
-	} catch (error) {
-	  console.error('Error fetching PageSpeed data:', error);
-	const pagespeedResults = document.getElementById('pagespeed-results');
-	if (pagespeedResults) {
-	  pagespeedResults.innerHTML = '<p>Error loading PageSpeed results.</p>';
-	}
-	}
-  }
-
-function displayPageSpeedData(data: any) {
-	const resultsDiv = document.getElementById('pagespeed-results');
-	const { lighthouseResult } = data;
-	const performanceScore = lighthouseResult.categories.performance.score * 100;
-
-	if (resultsDiv) {
-		resultsDiv.innerHTML = `
-		  <p>Performance Score: ${performanceScore}</p>
-		  <p>First Contentful Paint: ${lighthouseResult.audits['first-contentful-paint'].displayValue}</p>
-		  <p>Speed Index: ${lighthouseResult.audits['speed-index'].displayValue}</p>
-		  <p>Largest Contentful Paint: ${lighthouseResult.audits['largest-contentful-paint'].displayValue}</p>
-		  <p>Time to Interactive: ${lighthouseResult.audits['interactive'].displayValue}</p>
-		`;
-	}
-}
-
-  fetchPageSpeedData();
-</script>
