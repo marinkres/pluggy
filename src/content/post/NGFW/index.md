@@ -8,13 +8,13 @@ tags: ["cybersecurity", "networks", "lab", "NGFW"]
 
 Welcome to an in-depth series on network design, traffic management, and security solutions. Over the coming posts, we'll be looking into a range of networking topics and practical tasks using advanced tools and technologies. This series will guide you through building and managing complex network topologies, implementing robust security measures, and optimizing network performance. Here's a sneak peek into what you can expect:
 
-## [Designing a Network Topology with GNS3 and VMware ↪](https://marink.me/posts/topology/)
+## [Designing a Network Topology with GNS3 and VMware ↪](https://marink.me/posts/ngfw1/)
 In the first part of this series, we'll focus on designing a network topology using GNS3 and VMware. You'll learn how to create a network topology that includes a central office and a branch location for your fictional company, complete with at least four different departments. The diagram will illustrate the devices, IP address schemes, and how everything connects, providing a clear and organized view of the network structure.
 
-## [Routing ↪](https://marink.me/posts/topology/)
+## [Routing ↪](https://marink.me/posts/ngfw1/)
 We'll explore Routing. Its purpose, implementation, and how it's managed with next-generation firewalls. We'll also cover administrative distance and priority, key concepts that influence the routing process. You'll gain hands-on experience configuring a firewall to manage traffic, ensuring both primary and backup internet connectivity.
 
-## [Security Rules and NAT Mechanism ↪](https://marink.me/posts/topology/)
+## [Security Rules and NAT Mechanism ↪](https://marink.me/posts/ngfw1/)
 Understanding security rules and Network Address Translation (NAT) is crucial for any network administrator. In this segment, we'll explain what security rules are, their purpose, and how to configure them on a firewall. We’ll also discuss the NAT mechanism and its types, demonstrating how to set up rules for different departments to manage internet access and traffic.
 
 ## Fortinet Single Sign-On (FSSO) 
