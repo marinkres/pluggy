@@ -7,7 +7,6 @@
   to = "/success"
   status = 200
 
-[[plugins]]
-  package = "@netlify/plugin-functions-core"
+
 
 
