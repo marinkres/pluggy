@@ -1,2 +1,13 @@
 [build]
-  command = 'pnpm build'
+  command = "pnpm build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/success"
+  to = "/success"
+  status = 200
+
+[[plugins]]
+  package = "@netlify/plugin-functions-core"
+
+
