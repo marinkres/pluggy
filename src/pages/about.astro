@@ -1,7 +1,6 @@
 ---
 import aboutImg from "@/assets/about-astro.png";
 import PageLayout from "@/layouts/Base.astro";
-import { Image } from "astro:assets";
 import SocialList from "@/components/SocialList.astro";
 
 const meta = {
@@ -67,15 +66,43 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 	</div>
 	<section class="mt-10">
 		<h1 class="title">Contact</h1>
-		<p class="mt-8">
-			Contact me <a
-				aria-label="github repository"
-				class="cactus-link inline-block"
-				href="mailto:marinjurekresic@gmail.com"
-                rel="noopener noreferrer"
-                target="_blank">here</a
-            > via email.
-		</p>
+		<form
+			action="https://formspree.io/f/mnnadwgp"
+			method="POST"
+			class="space-y-4 mt-6 mb-6"
+			>
+			<label class="block">
+				<span>Your email:</span>
+				<input
+				  type="email"
+				  name="email"
+				  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+				  required
+				/>
+			  </label>
+			  <label class="block">
+				<span>Your message:</span>
+				<textarea
+				  id="message"
+				  name="message"
+				  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+				  rows="4"
+				  cols="10"
+				  maxlength="100"
+				  required
+				  style="resize: none; overflow: hidden;"
+				  autofocus
+				></textarea>
+			  </label>
+			  <!-- reCAPTCHA widget -->
+			  <!-- your other form fields go here -->
+			  <button
+				type="submit"
+				class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-bold rounded-md tag"
+			  >
+				Send
+			  </button>
+		</form>
 		<SocialList />
 	</section>
 	<section class="mt-16">
@@ -104,3 +131,22 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 		</a>
 	</p>
 </PageLayout>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	const textarea = document.getElementById("message") as HTMLTextAreaElement;
+	  const maxRows = 4;
+
+	  if (textarea !== null) {
+		textarea.addEventListener("input", function() {
+		  const lines = textarea.value.split("\n");
+		  if (lines.length > maxRows) {
+			textarea.value = lines.slice(0, maxRows).join("\n");
+		  }
+		});
+
+		// Ensure the cursor starts at the beginning
+		textarea.setSelectionRange(0, 0);
+	  }
+	});
+</script>
+
