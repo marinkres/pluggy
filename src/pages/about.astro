@@ -68,6 +68,7 @@ const cactusTech = [
   <section class="mt-10">
     <h1 class="title">Contact</h1>
     <form
+      id="contactForm"
       name="contact"
       method="POST"
       data-netlify="true"
@@ -98,6 +99,7 @@ const cactusTech = [
         ></textarea>
       </label>
       <div data-netlify-recaptcha="true"></div>
+      <div id="captchaError" style="color: red; display: none;">Please solve the captcha.</div>
       <button
         type="submit"
         class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-bold rounded-md tag"
@@ -135,10 +137,12 @@ const cactusTech = [
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const textarea = document.getElementById("message") as HTMLTextAreaElement;
+    const textarea = document.getElementById("message") as HTMLTextAreaElement | null;
     const maxRows = 4;
+    const form = document.getElementById("contactForm") as HTMLFormElement | null;
+    const captchaError = document.getElementById("captchaError") as HTMLDivElement | null;
 
-    if (textarea !== null) {
+    if (textarea) {
       textarea.addEventListener("input", function() {
         const lines = textarea.value.split("\n");
         if (lines.length > maxRows) {
@@ -148,6 +152,22 @@ const cactusTech = [
 
       // Ensure the cursor starts at the beginning
       textarea.setSelectionRange(0, 0);
+    }
+
+    if (form) {
+      form.addEventListener("submit", function(event) {
+        const recaptcha = document.querySelector(".g-recaptcha-response") as HTMLTextAreaElement | null;
+        if (!recaptcha || !recaptcha.value) {
+          event.preventDefault();
+          if (captchaError) {
+            captchaError.style.display = "block";
+          }
+        } else {
+          if (captchaError) {
+            captchaError.style.display = "none";
+          }
+        }
+      });
     }
   });
 </script>
