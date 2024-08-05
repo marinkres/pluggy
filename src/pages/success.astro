@@ -1,0 +1,18 @@
+---
+// src/pages/success.astro
+
+import PageLayout from "@/layouts/Base.astro";
+
+const meta = {
+  description: "Form submission successful",
+  title: "Success",
+};
+---
+
+<PageLayout meta={meta}>
+  <div class="space-y-6">
+    <h1 class="title">Success</h1>
+    <p>Your form has been submitted successfully. Thank you!</p>
+    <a href="/" class="tag">Go back to the homepage</a>
+  </div>
+</PageLayout>

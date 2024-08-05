@@ -4,149 +4,172 @@ import PageLayout from "@/layouts/Base.astro";
 import SocialList from "@/components/SocialList.astro";
 
 const meta = {
-	description: "I'm a starter theme for Astro.build",
-	title: "About",
+  description: "I'm a starter theme for Astro.build",
+  title: "About",
 };
-const cactusTech: { desc: string; href: string; title: string }[] = [
-	{
-		desc: "Build fast websites, faster.",
-		href: "https://astro.build",
-		title: "Astro",
-	},
-	{
-		desc: "Rapidly build modern websites without ever leaving your HTML.",
-		href: "https://tailwindcss.com",
-		title: "Tailwind CSS",
-	},
-	{
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
-		title: "Markdown",
-	},
-	{
-		desc: "Markdown for the component era.",
-		href: "https://mdxjs.com/",
-		title: "MDX",
-	},
-	{
-		desc: "Generating png Open Graph images for blog posts.",
-		href: "https://github.com/vercel/satori",
-		title: "Satori",
-	},
-	{
-		desc: "A fully static search library.",
-		href: "https://pagefind.app/",
-		title: "Pagefind",
-	},
-	{
-		desc: "Highly customisable source code & syntax highlighter.",
-		href: "https://expressive-code.com/",
-		title: "Expressive Code",
-	},
-	{
-		desc: "Scale & Ship Faster with a Composable Web Architecture.",
-		href: "https://netlify.com/",
-		title: "Netlify",
-	},
-	{
-		desc: "Distributed version control system.",
-		href: "https://git-scm.com/",
-		title: "Git",
-	},
+
+const cactusTech = [
+  {
+    desc: "Build fast websites, faster.",
+    href: "https://astro.build",
+    title: "Astro",
+  },
+  {
+    desc: "Rapidly build modern websites without ever leaving your HTML.",
+    href: "https://tailwindcss.com",
+    title: "Tailwind CSS",
+  },
+  {
+    desc: "Simple and easy-to-use markup language.",
+    href: "https://www.markdownguide.org/",
+    title: "Markdown",
+  },
+  {
+    desc: "Markdown for the component era.",
+    href: "https://mdxjs.com/",
+    title: "MDX",
+  },
+  {
+    desc: "Generating png Open Graph images for blog posts.",
+    href: "https://github.com/vercel/satori",
+    title: "Satori",
+  },
+  {
+    desc: "A fully static search library.",
+    href: "https://pagefind.app/",
+    title: "Pagefind",
+  },
+  {
+    desc: "Highly customisable source code & syntax highlighter.",
+    href: "https://expressive-code.com/",
+    title: "Expressive Code",
+  },
+  {
+    desc: "Scale & Ship Faster with a Composable Web Architecture.",
+    href: "https://netlify.com/",
+    title: "Netlify",
+  },
+  {
+    desc: "Distributed version control system.",
+    href: "https://git-scm.com/",
+    title: "Git",
+  },
 ];
 ---
 
 <PageLayout meta={meta}>
-	<div class="space-y-6">
-		<h1 class="title">About</h1>
-		<p>
-			Collection of projects and ramblings of a System Engineering student about <a href="/tags/cybersecurity/" class="tag">Cybersecurity</a>, <a href="/tags/devops/" class="tag">DevOps</a>, <a href="/tags/networks/" class="tag">Networks</a> and more. Explore my journey and insights in these fields. Enjoy your stay. 🚀
-		</p>
-		
-	</div>
-	<section class="mt-10">
-		<h1 class="title">Contact</h1>
-		<form
-			action="https://formspree.io/f/mnnadwgp"
-			method="POST"
-			class="space-y-4 mt-6 mb-6"
-			>
-			<label class="block">
-				<span>Your email:</span>
-				<input
-				  type="email"
-				  name="email"
-				  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-				  required
-				/>
-			  </label>
-			  <label class="block">
-				<span>Your message:</span>
-				<textarea
-				  id="message"
-				  name="message"
-				  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-				  rows="4"
-				  cols="10"
-				  maxlength="100"
-				  required
-				  style="resize: none; overflow: hidden;"
-				  autofocus
-				></textarea>
-			  </label>
-			  <!-- reCAPTCHA widget -->
-			  <!-- your other form fields go here -->
-			  <button
-				type="submit"
-				class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-bold rounded-md tag"
-			  >
-				Send
-			  </button>
-		</form>
-		<SocialList />
-	</section>
-	<section class="mt-16">
-		<h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
-		<dl class="space-y-4">
-			{
-				cactusTech.map(({ desc, href, title }) => (
-					<div class="flex flex-col gap-2 sm:flex-row">
-						<dt>
-							<span class="flex">
-								<a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
-									{title}
-								</a>
-								:
-							</span>
-						</dt>
-						<dd>{desc}</dd>
-					</div>
-				))
-			}
-		</dl>
-	</section>
-	<!-- Netlify Status Badge -->
-	<p class="mt-8">
-		<img src="https://api.netlify.com/api/v1/badges/1927fb22-90a0-4293-b11b-a26c48c9209f/deploy-status" alt="Netlify Status" />
-		</a>
-	</p>
+  <div class="space-y-6">
+    <h1 class="title">About</h1>
+    <p>
+      Collection of projects and ramblings of a System Engineering student about <a href="/tags/cybersecurity/" class="tag">Cybersecurity</a>, <a href="/tags/devops/" class="tag">DevOps</a>, <a href="/tags/networks/" class="tag">Networks</a> and more. Explore my journey and insights in these fields. Enjoy your stay. 🚀
+    </p>
+  </div>
+
+  <section class="mt-10">
+    <h1 class="title">Contact</h1>
+    <form
+      id="contactForm"
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      action="/success"
+      class="space-y-4 mt-6 mb-6"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <label class="block">
+        <span>Your email:</span>
+        <input
+          type="email"
+          name="email"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </label>
+      <label class="block">
+        <span>Your message:</span>
+        <textarea
+          id="message"
+          name="message"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          rows="4"
+          maxlength="100"
+          required
+          style="resize: none; overflow: hidden;"
+          autofocus
+        ></textarea>
+      </label>
+      <div data-netlify-recaptcha="true"></div>
+      <div id="captchaError" style="color: red; display: none;">Please solve the captcha.</div>
+      <button
+        type="submit"
+        class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-bold rounded-md tag"
+      >
+        Send
+      </button>
+    </form>
+    <SocialList />
+  </section>
+
+  <section class="mt-16">
+    <h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
+    <dl class="space-y-4">
+      {cactusTech.map(({ desc, href, title }) => (
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <dt>
+            <span class="flex">
+              <a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
+                {title}
+              </a>
+              :
+            </span>
+          </dt>
+          <dd>{desc}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <!-- Netlify Status Badge -->
+  <p class="mt-8">
+    <img src="https://api.netlify.com/api/v1/badges/1927fb22-90a0-4293-b11b-a26c48c9209f/deploy-status" alt="Netlify Status" />
+  </p>
 </PageLayout>
+
 <script>
-	document.addEventListener("DOMContentLoaded", function() {
-	const textarea = document.getElementById("message") as HTMLTextAreaElement;
-	  const maxRows = 4;
+  document.addEventListener("DOMContentLoaded", function() {
+    const textarea = document.getElementById("message") as HTMLTextAreaElement | null;
+    const maxRows = 4;
+    const form = document.getElementById("contactForm") as HTMLFormElement | null;
+    const captchaError = document.getElementById("captchaError") as HTMLDivElement | null;
 
-	  if (textarea !== null) {
-		textarea.addEventListener("input", function() {
-		  const lines = textarea.value.split("\n");
-		  if (lines.length > maxRows) {
-			textarea.value = lines.slice(0, maxRows).join("\n");
-		  }
-		});
+    if (textarea) {
+      textarea.addEventListener("input", function() {
+        const lines = textarea.value.split("\n");
+        if (lines.length > maxRows) {
+          textarea.value = lines.slice(0, maxRows).join("\n");
+        }
+      });
 
-		// Ensure the cursor starts at the beginning
-		textarea.setSelectionRange(0, 0);
-	  }
-	});
+      // Ensure the cursor starts at the beginning
+      textarea.setSelectionRange(0, 0);
+    }
+
+    if (form) {
+      form.addEventListener("submit", function(event) {
+        const recaptcha = document.querySelector(".g-recaptcha-response") as HTMLTextAreaElement | null;
+        if (!recaptcha || !recaptcha.value) {
+          event.preventDefault();
+          if (captchaError) {
+            captchaError.style.display = "block";
+          }
+        } else {
+          if (captchaError) {
+            captchaError.style.display = "none";
+          }
+        }
+      });
+    }
+  });
 </script>
+
 
