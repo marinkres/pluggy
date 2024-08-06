@@ -64,7 +64,24 @@ const cactusTech = [
       Collection of projects and ramblings of a System Engineering student about <a href="/tags/cybersecurity/" class="tag">Cybersecurity</a>, <a href="/tags/devops/" class="tag">DevOps</a>, <a href="/tags/networks/" class="tag">Networks</a> and more. Explore my journey and insights in these fields. Enjoy your stay. 🚀
     </p>
   </div>
-
+  <section class="mt-16">
+    <h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
+    <dl class="space-y-4">
+      {cactusTech.map(({ desc, href, title }) => (
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <dt>
+            <span class="flex">
+              <a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
+                {title}
+              </a>
+              :
+            </span>
+          </dt>
+          <dd>{desc}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
   <section class="mt-10">
     <h1 class="title">Contact</h1>
     <form
@@ -109,26 +126,6 @@ const cactusTech = [
     </form>
     <SocialList />
   </section>
-
-  <section class="mt-16">
-    <h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
-    <dl class="space-y-4">
-      {cactusTech.map(({ desc, href, title }) => (
-        <div class="flex flex-col gap-2 sm:flex-row">
-          <dt>
-            <span class="flex">
-              <a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
-                {title}
-              </a>
-              :
-            </span>
-          </dt>
-          <dd>{desc}</dd>
-        </div>
-      ))}
-    </dl>
-  </section>
-
   <!-- Netlify Status Badge -->
   <p class="mt-8">
     <img src="https://api.netlify.com/api/v1/badges/1927fb22-90a0-4293-b11b-a26c48c9209f/deploy-status" alt="Netlify Status" />
