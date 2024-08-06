@@ -90,24 +90,24 @@ const cactusTech = [
       method="POST"
       data-netlify="true"
       action="/success"
-      class="space-y-4 mt-6 mb-6"
+      class="space-y-6 mt-6 mb-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
     >
       <input type="hidden" name="form-name" value="contact" />
       <label class="block">
-        <span>Your email:</span>
+        <span class="text-gray-700 dark:text-gray-300">Your email:</span>
         <input
           type="email"
           name="email"
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           required
         />
       </label>
       <label class="block">
-        <span>Your message:</span>
+        <span class="text-gray-700 dark:text-gray-300">Your message:</span>
         <textarea
           id="message"
           name="message"
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           rows="4"
           maxlength="100"
           required
@@ -115,11 +115,13 @@ const cactusTech = [
           autofocus
         ></textarea>
       </label>
-      <div data-netlify-recaptcha="true" data-theme="dark" data-size="compact"></div>
-      <div id="captchaError" style="color: red; display: none;">Please solve the captcha.</div>
+      <div class="flex justify-center">
+        <div data-netlify-recaptcha="true" data-theme="light" class="dark:data-theme='dark'" data-size="compact"></div>
+      </div>
+      <div id="captchaError" class="text-red-500 text-sm hidden">Please solve the captcha.</div>
       <button
         type="submit"
-        class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-bold rounded-md tag"
+        class="w-full py-2 px-4 tag  text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
       >
         Send
       </button>
