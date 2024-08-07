@@ -169,10 +169,17 @@ const cactusTech = [
         if (honeypotField && honeypotField.value) {
           event.preventDefault();  // Block the form submission
           alert("Spam detected. Please try again.");
+        } else {
+          // Remove the honeypot field if empty before submission
+          if (honeypotField) {
+            honeypotField.parentNode?.removeChild(honeypotField);
+          }
         }
       });
     }
   });
+</script>
+
 </script>
 
 
