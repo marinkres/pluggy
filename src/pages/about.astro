@@ -82,15 +82,15 @@ const cactusTech = [
       ))}
     </dl>
   </section>
-  <section class="mt-10">
-    <h1 class="title">Contact</h1>
+  <section class="mt-16 max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">Contact</h1>
     <form
       id="contactForm"
       name="contact"
       method="POST"
       data-netlify="true"
       action="/success"
-      class="space-y-6 mt-6 mb-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+      class="space-y-6 mb-10"
     >
       <input type="hidden" name="form-name" value="contact" />
       
@@ -99,43 +99,49 @@ const cactusTech = [
         <span class="sr-only">Do not fill this out if you're human:</span>
         <input type="text" name="honeypot" tabindex="-1" autocomplete="off" />
       </label>
-
-      <label class="block">
-        <span class="text-gray-700 dark:text-gray-300">Your email:</span>
-        <input
-          type="email"
-          name="email"
-          class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-      </label>
-      <label class="block">
-        <span class="text-gray-700 dark:text-gray-300">Your message:</span>
-        <textarea
-          id="message"
-          name="message"
-          class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          rows="4"
-          maxlength="100"
-          required
-          style="resize: none; overflow: hidden;"
-          autofocus
-        ></textarea>
-      </label>
+  
+      <div class="flex flex-col gap-4">
+        <label class="block">
+          <span class="text-gray-700 dark:text-gray-300">Your email:</span>
+          <input
+            type="email"
+            name="email"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-transparent dark:bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-500 focus:border-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
+            required
+          />
+        </label>
+        <label class="block">
+          <span class="text-gray-700 dark:text-gray-300">Your message:</span>
+          <textarea
+            id="message"
+            name="message"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-transparent dark:bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-500 focus:border-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
+            rows="4"
+            maxlength="100"
+            required
+            style="resize: none;"
+            autofocus
+          ></textarea>
+        </label>
+      </div>
+      
       <button
         type="submit"
-        class="w-full py-2 px-4 tag text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+        class="w-full py-2 px-4 tag text-white font-semibold rounded-md shadow-sm hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
       >
         Send
       </button>
     </form>
     <SocialList />
   </section>
+  
+  
   <!-- Netlify Status Badge -->
   <p class="mt-8">
     <img src="https://api.netlify.com/api/v1/badges/1927fb22-90a0-4293-b11b-a26c48c9209f/deploy-status" alt="Netlify Status" />
   </p>
 </PageLayout>
+
 
 
 <script>
