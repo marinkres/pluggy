@@ -35,4 +35,18 @@
 	.tag {
 		@apply bg-accent text-bgColor rounded-lg px-1 py-0.5 no-underline;
 	}
+	.honeypot-field {
+		display: none;
+	  }
+	  
+	  .honeypot-field input {
+		visibility: hidden;
+		height: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		position: absolute;
+		left: -9999px;
+	  }
+	  
 }

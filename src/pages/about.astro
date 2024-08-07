@@ -93,6 +93,13 @@ const cactusTech = [
       class="space-y-6 mt-6 mb-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
     >
       <input type="hidden" name="form-name" value="contact" />
+      
+      <!-- Honeypot field -->
+      <label class="honeypot-field" aria-hidden="true">
+        <span class="sr-only">Do not fill this out if you're human:</span>
+        <input type="text" name="honeypot" tabindex="-1" autocomplete="off" />
+      </label>
+
       <label class="block">
         <span class="text-gray-700 dark:text-gray-300">Your email:</span>
         <input
@@ -115,13 +122,9 @@ const cactusTech = [
           autofocus
         ></textarea>
       </label>
-      <div class="flex justify-center">
-        <div data-netlify-recaptcha="true" data-theme="light" class="dark:data-theme='dark'" data-size="compact"></div>
-      </div>
-      <div id="captchaError" class="text-red-500 text-sm hidden">Please solve the captcha.</div>
       <button
         type="submit"
-        class="w-full py-2 px-4 tag  text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+        class="w-full py-2 px-4 tag text-white font-bold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
       >
         Send
       </button>
@@ -134,12 +137,13 @@ const cactusTech = [
   </p>
 </PageLayout>
 
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const textarea = document.getElementById("message") as HTMLTextAreaElement | null;
     const maxRows = 4;
     const form = document.getElementById("contactForm") as HTMLFormElement | null;
-    const captchaError = document.getElementById("captchaError") as HTMLDivElement | null;
+    const honeypotField = form?.querySelector('input[name="honeypot"]') as HTMLInputElement | null;
 
     if (textarea) {
       textarea.addEventListener("input", function() {
@@ -155,20 +159,15 @@ const cactusTech = [
 
     if (form) {
       form.addEventListener("submit", function(event) {
-        const recaptcha = document.querySelector(".g-recaptcha-response") as HTMLTextAreaElement | null;
-        if (!recaptcha || !recaptcha.value) {
-          event.preventDefault();
-          if (captchaError) {
-            captchaError.style.display = "block";
-          }
-        } else {
-          if (captchaError) {
-            captchaError.style.display = "none";
-          }
+        // Check if the honeypot field is filled
+        if (honeypotField && honeypotField.value) {
+          event.preventDefault();  // Block the form submission
+          alert("Spam detected. Please try again.");
         }
       });
     }
   });
 </script>
+
 
 
