@@ -17,7 +17,7 @@ We'll explore Routing. Its purpose, implementation, and how it's managed with ne
 ## [Security Rules and NAT Mechanism ↪](https://marink.me/posts/ngfw1/)
 Understanding security rules and Network Address Translation (NAT) is crucial for any network administrator. In this segment, we'll explain what security rules are, their purpose, and how to configure them on a firewall. We’ll also discuss the NAT mechanism and its types, demonstrating how to set up rules for different departments to manage internet access and traffic.
 
-## [Fortinet Single Sign-On (FSSO)] (https://marink.me/posts/ngfw2/)
+## [Fortinet Single Sign-On (FSSO)↪](https://marink.me/posts/ngfw2/)
 Discover Fortinet's Single Sign-On (FSSO) mechanism, which streamlines user authentication and enhances security. We’ll cover the components of FSSO and its advantages. You’ll implement essential services on a Windows server, configure the FSSO agent, and integrate it with FortiGate for seamless user management.
 
 ## Software-Defined WAN (SD-WAN) Management
