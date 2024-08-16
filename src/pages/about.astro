@@ -45,24 +45,24 @@ const cactusTech = [
     title: "Expressive Code",
   },
   {
-    desc: "Scale & Ship Faster with a Composable Web Architecture.",
-    href: "https://netlify.com/",
-    title: "Netlify",
-  },
-  {
     desc: "Distributed version control system.",
     href: "https://git-scm.com/",
     title: "Git",
   },
+  {
+    desc: "Scale & Ship Faster with a Composable Web Architecture.",
+    href: "https://netlify.com/",
+    title: "Netlify",
+  }
 ];
 ---
 
 <PageLayout meta={meta}>
   <div class="space-y-6">
     <h1 class="title">About</h1>
-    <p>
-      Collection of projects and ramblings of a System Engineering student about <a href="/tags/cybersecurity/" class="tag hover:bg-red-500 hover:dark:bg-emerald-600">Cybersecurity</a>, <a href="/tags/devops/" class="tag hover:bg-red-500 hover:dark:bg-emerald-600">DevOps</a>, <a href="/tags/networks/" class="tag hover:bg-red-500 hover:dark:bg-emerald-600">Networks</a> and more. Explore my journey and insights in these fields. Enjoy your stay. 🚀
-    </p>
+    <p class="mb-4">
+			Collection of projects and solutions of a System Engineering student about <a href="/tags/cybersecurity/" class="tag">Cybersecurity</a>, <a href="/tags/devops/" class="tag">DevOps</a>, <a href="/tags/networks/" class="tag">Networks</a> and more. Explore my journey and insights in these fields. Enjoy your stay. 🚀
+		</p>
   </div>
   <section class="mt-16">
     <h4 class="title mb-4 text-xl">Technologies Used For The Website</h4>
@@ -81,6 +81,10 @@ const cactusTech = [
         </div>
       ))}
     </dl>
+     <!-- Netlify Status Badge -->
+      <p class="mt-4">
+        <img src="https://api.netlify.com/api/v1/badges/1927fb22-90a0-4293-b11b-a26c48c9209f/deploy-status" alt="Netlify Status" />
+      </p>
   </section>
   <section class="mt-16 max-w-4xl mx-auto">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">Contact</h1>
@@ -132,16 +136,10 @@ const cactusTech = [
       </button>
     </form>
     <SocialList />
-    <button class="tag hover:bg-yellow-400 mt-2 hover:text-black">
+    <button class="p-1.5 tag bg-zinc-900 text-white hover:bg-yellow-400 mt-2 hover:text-black">
       <a href="https://www.buymeacoffee.com/marinkresic" target="_blank">☕Buy me a coffee</a>
     </button>
   </section>
-  
-  
-  <!-- Netlify Status Badge -->
-  <p class="mt-4">
-    <img src="https://api.netlify.com/api/v1/badges/1927fb22-90a0-4293-b11b-a26c48c9209f/deploy-status" alt="Netlify Status" />
-  </p>
 </PageLayout>
 
 
