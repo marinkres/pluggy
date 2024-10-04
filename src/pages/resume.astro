@@ -1,0 +1,115 @@
+---
+// Import necessary assets and components
+import PageLayout from "@/layouts/Base.astro";
+import SocialList from "@/components/SocialList.astro";
+
+const meta = {
+  description: "Resume Page - MarinKresic Blog",
+  title: "Resume",
+};
+
+// Add your resume details (education, experience, skills, etc.)
+const resumeData = {
+  education: [
+    {
+      degree: "Bachelor in Computer Engineering",
+      institution: "Algebra University",
+      year: "2022 - Present",
+    },
+    {
+      degree: "Computer Technician",
+      institution: "Tehnička škola Ruđer Bošković",
+      year: "Graduated 2017",
+    },
+  ],
+  experience: [
+    {
+      role: "Student System Administrator Intern",
+      company: "Ericsson Nikola Tesla",
+      duration: "May 2017 - September 2017",
+      description: "• Gained hands-on experience managing and maintaining server infrastructure, including configuration, monitoring, and troubleshooting. • Collaborated with senior IT staff on optimizing server performance and implementing best practices in system administration. Skills gained: Server management, system administration, networking, troubleshooting, IT support.",
+    },
+  ],
+  certification: [
+    {
+      name: "Cisco Certified Network Administrator – CCNA",
+      company: "Cisco",
+      duration: "2017",
+    },
+    {
+      name: "Fortinet Certified Associate Cybersecurity",
+      company: "Fortinet",
+      duration: "2024",
+    },
+  ],
+  skills: [
+    "System Administration (Windows Server & RHEL Linux)",
+    "Ansible",
+    "Python",
+    "SQL/NoSQL Databases",
+    "Powershell scripting",
+    "Shell scripting (BASH)",
+    "FortiNet firewall",
+    "CI/CD",
+    "Docker & Kubernetes",
+    "Network Routing and Switching",
+    "Virtualization Technologies",
+    "Microsoft Azure",
+  ],
+  
+};
+---
+
+<PageLayout meta={meta}>
+  <div class="space-y-8">
+    <h1 class="title text-4xl font-bold">Resume</h1>
+
+    <section>
+        <h2 class="text-3xl font-semibold">Experience</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          {resumeData.experience.map(({ role, company, duration, description }) => (
+            <li>
+              <strong class="text-xl">{role}</strong> at <span class="font-semibold">{company}</span> <span class="text-gray-500">({duration})</span><br />
+              <span class="italic text-gray-500">{description}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    <section>
+      <h2 class="text-3xl font-semibold">Education</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        {resumeData.education.map(({ degree, institution, year }) => (
+          <li>
+            <strong class="text-xl">{degree}</strong><br />
+            <span class="text-gray-500">{institution}</span> <span class="text-gray-500">({year})</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+        <h2 class="text-3xl font-semibold">Certification</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          {resumeData.certification.map(({ name, company, duration }) => (
+            <li>
+              <strong class="text-xl">{name}</strong> at <span class="font-semibold">{company}</span> <span class="text-gray-400">({duration})</span><br />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+    <section>
+      <h2 class="text-3xl font-semibold">Skills</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        {resumeData.skills.map(skill => (
+          <li class="">{skill}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mt-16">
+      <h4 class="title mb-4 text-2xl font-semibold">Contact</h4>
+      <SocialList />
+    </section>
+  </div>
+</PageLayout>
