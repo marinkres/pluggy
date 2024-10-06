@@ -26,7 +26,7 @@ jobs:
         uses: Azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob upload-batch -d '$web' -s './dist' --account-name astroblogstorage
+            az storage blob upload-batch -d '$web' -s './dist' --account-name astroblogstorage --overwrite
         env:
           AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
           AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
