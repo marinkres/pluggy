@@ -1,0 +1,32 @@
+name: Deploy to Azure Storage
+
+on:
+  push:
+    branches:
+      - master  # Change to your default branch if different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Specify the Node.js version you're using
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm run build  # Ensure this command builds your project into the `dist` folder
+
+      - name: Azure Storage Upload
+        uses: Azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob upload-batch -d '$web' -s './dist' --account-name astroblogstorage
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
