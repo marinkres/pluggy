@@ -3,24 +3,24 @@ name: Deploy to Azure Storage
 on:
   push:
     branches:
-      - main  # Change to your default branch if different
+      - main  # Ensure this matches your pushed branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3  # Updated to v3
         with:
-          node-version: '16'  # Specify the Node.js version you're using
+          node-version: '20'  # Set to the latest version
 
       - name: Install dependencies
         run: |
           npm install
-          npm run build  # Ensure this command builds your project into the `dist` folder
+          npm run build
 
       - name: Azure Storage Upload
         uses: Azure/CLI@v1
