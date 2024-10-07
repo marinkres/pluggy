@@ -1,6 +1,6 @@
 ---
-title: "From Netlify to Azure: A DevOps Journey to Enhance My Blog"
-description: "From Netlify to Azure: A DevOps Journey to Enhance My Blog"
+title: "Netlify to Azure Migration: A Cloud Journey"
+description: "Migrating From Netlify to Azure: A Cloud Journey to Enhance My Blog and gain more knowledge about DevOps"
 publishDate: "7 oct 2024"
 tags: ["devops", "azure", "lab"]
 updatedDate: 7 oct 2024
@@ -13,19 +13,19 @@ I recently made the decision to migrate my blog from Netlify to Azure. The prima
 
 When I first launched marink.me, I chose Netlify for its simplicity and powerful features. However, as I delved deeper into the world of DevOps, I began to realize the need for more customization, scalability, and a wider array of services. Here are a few reasons why I decided to make the switch:
 
-2. Integration with Azure Services: Hosting my blog on Azure allows for seamless integration with other services like Azure Functions and Azure Logic Apps, enabling more complex workflows and capabilities.
+2. **Integration with Azure Services**: Hosting my blog on Azure allows for seamless integration with other services like Azure Functions and Azure Logic Apps, enabling more complex workflows and capabilities.
 
-3. Infrastructure as Code (IaC): I wanted to adopt Infrastructure as Code practices, and Azure’s ARM templates allow me to manage my resources programmatically, providing a clear and replicable deployment strategy.
+3. **Infrastructure as Code (IaC)**: I wanted to adopt Infrastructure as Code practices, and Azure’s ARM templates allow me to manage my resources programmatically, providing a clear and replicable deployment strategy.
 
-5. API Integration: Utilizing Azure APIs enables me to expand my blog’s functionality and integrate it with other applications and services in the future.
+5. **API Integration**: Utilizing Azure APIs enables me to expand my blog’s functionality and integrate it with other applications and services in the future.
 
-6. Learning Opportunity: As an aspiring IT professional, gaining hands-on experience with Azure was a great way to expand my skill set and familiarize myself with cloud computing concepts.
+6. **Learning Opportunity**: As an aspiring IT engineer, gaining hands-on experience with Azure was a great way to expand my skill set and familiarize myself with cloud computing concepts.
 
-7. CI/CD Implementation: I wanted to streamline my development process, and integrating GitHub Actions for Continuous Integration and Continuous Deployment (CI/CD) was a key part of my migration strategy.
+7. **CI/CD Implementation**: I wanted to streamline my development process, and integrating GitHub Actions for Continuous Integration and Continuous Deployment (CI/CD) was a key part of my migration strategy.
 
 ## The Migration Process
-The first step in the migration process was organizing my resources using Azure Resource Groups. Resource Groups help manage and group related resources, making it easier to monitor, manage, and deploy resources together. 
-After creating the resource group, I proceeded to set up a new Azure Storage account: 
+The first step in the migration process was organizing my resources using **Azure Resource Groups**. Resource Groups help manage and group related resources, making it easier to monitor, manage, and deploy resources together. 
+After creating the resource group, I proceeded to set up a new **Azure Storage account**: 
 ![Company Network Layout](./one.png)
 
 ### Infrastructure as Code (IaC)
@@ -43,16 +43,16 @@ To enhance the performance of my blog, I configured Azure CDN to cache and distr
 
 Here’s how I set up the Azure CDN:
 
-- CDN Profile Creation: I created a new CDN profile in the Azure portal and selected the pricing tier based on my expected usage.
-- Endpoint Configuration: I set up a CDN endpoint pointing to my Azure Storage static website. This endpoint serves as the public URL for my blog's assets.
-- Caching Rules: I configured caching rules to control how long content should be cached, optimizing performance while ensuring that updates to my blog are reflected quickly.
+- **CDN Profile Creation**: I created a new CDN profile in the Azure portal and selected the pricing tier based on my expected usage.
+- **Endpoint Configuration**: I set up a CDN endpoint pointing to my Azure Storage static website. This endpoint serves as the public URL for my blog's assets.
+- **Caching Rules**: I configured caching rules to control how long content should be cached, optimizing performance while ensuring that updates to my blog are reflected quickly.
 
 ### Configuring GitHub CI/CD
-To streamline my workflow, I implemented CI/CD using GitHub Actions. This allowed me to automate the deployment process, ensuring that every change pushed to the main branch of my repository automatically updates the blog on Azure. Here’s a brief overview of how I set it up:
+To streamline my workflow, I implemented CI/CD using **GitHub Actions**. This allowed me to automate the deployment process, ensuring that every change pushed to the main branch of my repository automatically updates the blog on Azure. Here’s a brief overview of how I set it up:
 
-- GitHub Repository: I created a GitHub repository to store my blog’s source code.
+- **GitHub Repository**: I created a GitHub repository to store my blog’s source code.
 
-- Workflow File: I created a .github/workflows/main.yml file in my repository, which contains the following steps:
+- **Workflow File**: I created a .github/workflows/main.yml file in my repository, which contains the following steps:
 
 ```bash title="main.yml"
 name: Deploy to Azure
@@ -100,5 +100,5 @@ After migrating all the content, I conducted extensive testing to ensure everyth
 - Enabling Caching: Configuring appropriate caching settings in Cloudflare.
 - Image Optimization: Compressing images to reduce loading times without sacrificing quality.
 
-In the future I will expand on more services, implementations and security within Azure. Stay tuned for the next post!
+**In the future I will expand on more services, implementations and security within Azure. Stay tuned for the next post!**
 
