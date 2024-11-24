@@ -45,7 +45,7 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 	{
 		path: "/resume/",
-		title: "Resume",
+		title: "Resume(CV)",
 	},
 ];
 

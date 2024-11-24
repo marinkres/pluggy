@@ -5,14 +5,14 @@ import SocialList from "@/components/SocialList.astro";
 
 const meta = {
   description: "Resume Page - MarinKresic Blog",
-  title: "Resume",
+  title: "CV",
 };
 
 // Add your resume details (education, experience, skills, etc.)
 const resumeData = {
   education: [
     {
-      degree: "Bachelor in Computer Science - Subspecialization in Systems engineering",
+      degree: "Bachelor's in Computer Science - Sub specialization in Systems engineering",
       institution: "Algebra University",
       year: "2022 - Present",
     },
@@ -62,22 +62,20 @@ const resumeData = {
     "Network Routing and Switching",
     "FortiNet firewall",
     "Microsoft Azure",
-    "Powershell scripting",
-    "Shell scripting (BASH)",
+    "Powershell scripting/Shell scripting (BASH)",
     "Ansible",
     "Python",
     "SQL/NoSQL Databases",
-    "CI/CD",
-    "Docker & Kubernetes",
-    "Virtualization Technologies",
+    "CI/CD, Git",
+    "Docker & Kubernetes/Virtualization Technologies",
   ],
 };
 ---
 
 <PageLayout meta={meta}>
   <div class="space-y-8">
-    <h1 class="title text-4xl font-bold">Resume</h1>
-
+    <h1 class="title text-4xl font-bold">Circum Vitae - Marin Krešić</h1>
+    <p>Zagreb, Croatia - marinjurekresic@gmail.com</p>
     <section>
         <h2 class="text-3xl font-semibold">Experience</h2>
         <ul class="list-disc pl-5 space-y-2">
@@ -102,7 +100,7 @@ const resumeData = {
     </section>
 
     <section>
-        <h2 class="text-3xl font-semibold">Certification</h2>
+        <h2 class="text-3xl font-semibold mb-2">Certification</h2>
         <ul class="list-disc pl-5 space-y-2">
           {resumeData.certification.map(({ name, company, duration }) => (
             <li>
@@ -120,9 +118,12 @@ const resumeData = {
         ))}
       </ul>
     </section>
-
+    <div class="mt-8">
+      <a target="_blank" href="/MarinKresic_CV.pdf" class="tag text-white px-4 py-2 rounded">
+        📥Download Resume (PDF)
+      </a>
+    </div>
     <section class="mt-16">
-      <h4 class="title mb-4 text-2xl font-semibold">Contact</h4>
       <SocialList />
     </section>
   </div>
