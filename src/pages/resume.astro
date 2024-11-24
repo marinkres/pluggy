@@ -74,10 +74,10 @@ const resumeData = {
 
 <PageLayout meta={meta}>
   <div class="space-y-8">
-    <h1 class="title text-4xl font-bold">Circum Vitae - Marin Krešić</h1>
+    <h1 class="title text-3xl font-bold">Circum Vitae - Marin Krešić</h1>
     <p>Zagreb, Croatia - marinjurekresic@gmail.com</p>
     <section>
-        <h2 class="text-3xl font-semibold">Experience</h2>
+        <h2 class="text-2xl font-semibold mb-2">Experience</h2>
         <ul class="list-disc pl-5 space-y-2">
           {resumeData.experience.map(({ role, company, duration, description }) => (
             <li>
@@ -88,7 +88,7 @@ const resumeData = {
         </ul>
       </section>
     <section>
-      <h2 class="text-3xl font-semibold">Education</h2>
+      <h2 class="text-2xl font-semibold mb-2">Education</h2>
       <ul class="list-disc pl-5 space-y-2">
         {resumeData.education.map(({ degree, institution, year }) => (
           <li>
@@ -100,7 +100,7 @@ const resumeData = {
     </section>
 
     <section>
-        <h2 class="text-3xl font-semibold mb-2">Certification</h2>
+        <h2 class="text-2xl font-semibold mb-2">Certification</h2>
         <ul class="list-disc pl-5 space-y-2">
           {resumeData.certification.map(({ name, company, duration }) => (
             <li>
@@ -111,7 +111,7 @@ const resumeData = {
       </section>
 
     <section>
-      <h2 class="text-3xl font-semibold">Skills</h2>
+      <h2 class="text-2xl font-semibold mb-2">Skills</h2>
       <ul class="list-disc pl-5 space-y-2">
         {resumeData.skills.map(skill => (
           <li class="">{skill}</li>
