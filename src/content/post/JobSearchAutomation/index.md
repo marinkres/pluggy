@@ -3,7 +3,7 @@ title: "Automating Job Hunting"
 description: "Automating Job Scraping with Node.js and GitHub Actions: A DevOps Approach to Streamline Job Hunting"
 publishDate: "29 nov 2024"
 tags: ["devops", "automation", "lab"]
-updatedDate: 29 nov 2024
+updatedDate: 30 nov 2024
 ---
 
 ## The Problem: Finding New Jobs Efficiently
@@ -25,12 +25,12 @@ This blog post will walk you through how I built the entire system using **Node.
 
 The first step was to set up a Node.js project to scrape job listings from the website. I used a few packages that helped make the process smoother and created a main.js script:
 
-- Sends an HTTP request to the website to fetch job data with Axios.
-- Parses the data with cheerio, extracting details like job title, company, location, salary, and the job link with Cheerio.
-- Compares the current jobs to the previously saved jobs to find new listings.
-- Sends an email with the new job listings using Nodemailer.
+1. Sends an HTTP request to the website to fetch job data with Axios.
+2. Parses the data with cheerio, extracting details like job title, company, location, salary, and the job link with Cheerio.
+3. Compares the current jobs to the previously saved jobs to find new listings.
+4. Sends an email with the new job listings using Nodemailer.
 
-Example of the core logic, full code can be found on my GitHub repo:
+Example of the core logic, full code can be found on my [Github Repository ↪](https://github.com/marinkres/studentjobs):
 ```javascript title="main.js"
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -62,9 +62,9 @@ async function scrapeJobs() {
 ## Step 2: Handling New Jobs
 
 The main challenge was finding new jobs that hadn't been seen before. Here's how I handled it:
-- Every time the script runs, it scrapes the page and stores the current list of jobs.
-- I compare this new list of jobs with the previously saved list (previous_jobs.json).
-- If there are new jobs that aren’t in the previous list, I send an email with those job listings.
+1. Every time the script runs, it scrapes the page and stores the current list of jobs.
+2. I compare this new list of jobs with the previously saved list (previous_jobs.json).
+3. If there are new jobs that aren’t in the previous list, I send an email with those job listings.
 
 This ensures that I only get notified about new opportunities that I haven’t already seen.
 
