@@ -154,4 +154,5 @@ Another problem was setting permissions for the GitHub Actions Bot so it can pus
 
 In addition, I also added a check before committing and pushing changes. The script only commits if there are actual changes (i.e., new jobs), avoiding unnecessary commits.
 
+![GHActions2](./github2.jpg)
 ![GHActions](./github.png)
