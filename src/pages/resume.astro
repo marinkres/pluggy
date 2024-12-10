@@ -24,6 +24,12 @@ const resumeData = {
   ],
   experience: [
     {
+      role: "IT Service Desk",
+      company: "Raiffeisen Bank Croatia",
+      duration: "December 2024 - Present",
+      description: "",
+    },
+    {
       role: "Student System Administrator Intern",
       company: "Ericsson Nikola Tesla",
       duration: "May 2017 - September 2017",
@@ -81,7 +87,8 @@ const resumeData = {
         <ul class="list-disc pl-5 space-y-2">
           {resumeData.experience.map(({ role, company, duration, description }) => (
             <li>
-              <strong class="text-xl">{role}</strong> at <span class="font-semibold">{company}</span> <span class="text-gray-500">({duration})</span><br />
+              <strong class="text-xl">{role}</strong> at <span class="font-bold text-lg">{company}</span><br />
+              <span class="text-gray-500">({duration})</span><br />
               <span class="italic text-gray-500">{description}</span>
             </li>
           ))}
