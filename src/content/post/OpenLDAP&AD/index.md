@@ -10,13 +10,18 @@ updatedDate: 27 jan 2025
 
 In hybrid IT environments, where Linux and Windows servers coexist, managing user authentication across platforms can pose significant challenges. A centralized authentication system ensures simplicity, security, and efficiency by synchronizing user accounts and credentials between systems. 
 
-This project implementation successfully integrated Windows Server 2019 Active Directory (AD) with an OpenLDAP system on CentOS Linux using Samba tools, achieving bidirectional user account synchronization and centralized authentication management. Key technical elements include configuring DNS for inter-server communication, setting up Kerberos authentication for secure interaction, and using Samba services to join the Linux server to the AD domain. Experimental results demonstrate functional user synchronization between systems, while alternative approaches such as FreeIPA were identified as less practical due to the complexity of managing LDIF files.
+This project implementation successfully integrated Windows Server 2019 Active Directory (AD) with an OpenLDAP system on CentOS Linux using Samba tools, achieving bidirectional user account synchronization and centralized authentication management. 
 
-This is not a step by step guide, but a over simplified explanation of the project workings.
+Key technical elements include configuring DNS for inter-server communication, setting up Kerberos authentication for secure interaction, and using Samba services to join the Linux server to the AD domain. 
+
+Experimental results demonstrate functional user synchronization between systems, while alternative approaches such as FreeIPA were identified as less practical due to the complexity of managing LDIF files.
+
+>This is not a step by step guide, but a over simplified explanation of the project workings.
 
 ## Architecture of the Heterogeneous System
 
 ### Two-Component Model: Windows and Linux Server Infrastructure
+
 The implementation uses the VMware Workstation Pro 2017 virtualization platform with two virtual machines:
 
 Windows Server 2019 (ADSERVER.local)
@@ -34,26 +39,32 @@ The network configuration uses bridge mode for direct L2 communication between v
 
 ### DNS Hierarchy and Zone Delegation
 
-The Windows DNS server is configured as authoritative for the adserver.local zone, with an explicit A record for the Linux server (openldap.adserver.local → 192.168.1.20). The reverse zone for 192.168.1.0/24 enables PTR queries for reverse lookup functionality. PowerShell commands for creating zones:
-``` powershell
+The Windows DNS server is configured as authoritative for the adserver.local zone, with an explicit A record for the Linux server (openldap.adserver.local → 192.168.1.20). 
+
+The reverse zone for 192.168.1.0/24 enables PTR queries for reverse lookup functionality. 
+
+PowerShell commands for creating zones:
+``` powershell title=powershell
 Add-DnsServerPrimaryZone -NetworkID "192.168.1.0/24" -ReplicationScope "Forest"
 Add-DnsServerResourceRecordA -Name "openldap" -IPv4Address "192.168.1.20"
 ```
 This approach eliminates dependence on external DNS resolvers and enables dynamic registration of clients through Samba integration.
+
 ![DNS](./Two.png)
 
 ## Configuring Windows Active Directory
 ### Initial Procedure for Promotion to DC
 
-After the basic installation of Windows Server, the DCPROMO tool was used to promote the server to a Domain Controller with the creation of a new forest, adserver.local. Significant configuration points include:
+After the basic installation of Windows Server, the DCPROMO tool was used to promote the server to a Domain Controller with the creation of a new forest, adserver.local. 
 
-FSMO Role Assignment: Schema Master, Domain Naming Master, PDC Emulator
+Significant configuration points include:
 
-Dynamic DNS Registration: Enabled for client stations
-
-Forest Trust: Not implemented due to the simplicity of the test environment
+- **FSMO Role Assignment**: Schema Master, Domain Naming Master, PDC Emulator
+- **Dynamic DNS Registration**: Enabled for client stations
+- **Forest Trust**: Not implemented due to the simplicity of the test environment
 
 The functionality of AD can be verified through the Active Directory Users and Computers console, where test users (e.g., "Marko," "Darko") were created.
+
 ![WindowsAD](./One.png)
 ![Ping](./Three.png)
 
@@ -61,32 +72,29 @@ The functionality of AD can be verified through the Active Directory Users and C
 ### Basic OpenLDAP Installation Procedure
 
 On the CentOS server, OpenLDAP was installed through the yum repository with the following packages:
-
 ```bash
 yum install -y openldap-servers openldap-clients sssd samba samba-client
 ```
 
 Key configuration steps include:
 
-1. slapd.conf:
-
+1. **slapd.conf**:
 ```text
 database mdb
 suffix "dc=adserver,dc=local"
 rootdn "cn=admin,dc=adserver,dc=local"
 rootpw {SSHA}...
 ```
+
 The slappasswd tool was used to generate the hashed administrator password.
 ![Slapd](./Four.png)
 
 
-2. LDAP Schema Import:
-
+2. **LDAP Schema Import**:
 ```bash
 ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
 ```
-3. Basic Organizational Unit:
-
+3. **Basic Organizational Unit**:
 ```text
 dn: ou=People,dc=adserver,dc=local
 objectClass: organizationalUnit
@@ -177,10 +185,10 @@ Using the time command during the kinit operation, the average time to issue a T
 ## Conclusion and Recommendations
 The implementation demonstrated the ability of OpenLDAP and Samba to integrate into heterogeneous environments, with several key recommendations for production use:
 
-Automatic Synchronization: Implementing lsyncd for real-time replication of LDAP changes
+- Automatic Synchronization: Implementing lsyncd for real-time replication of LDAP changes
 
-Redundancy: Setting up a secondary Samba AD Domain Controller
+- Redundancy: Setting up a secondary Samba AD Domain Controller
 
-Monitoring: Integration with Zabbix or Prometheus for monitoring LDAP/SMB metrics
+- Monitoring: Integration with Zabbix or Prometheus for monitoring LDAP/SMB metrics
 
 This project serves as a reference model for system engineers who combine Microsoft and open-source technologies in corporate networks.
