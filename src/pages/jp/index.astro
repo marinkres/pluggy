@@ -1,0 +1,33 @@
+---
+import SocialList from "@/components/SocialList.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import { getAllPosts, sortMDByDate } from "@/data/post";
+import PageLayout from "@/layouts/Base.astro";
+
+const MAX_POSTS = 10;
+const allPosts = await getAllPosts();
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+---
+
+<PageLayout meta={{ title: "ホーム" }}>
+	<section>
+		<p class="mb-4">
+			<strong>システム工学の学生</strong> によるプロジェクトとソリューションのコレクション。<a href="/tags/cybersecurity/" class="tag">サイバーセキュリティ</a>、<a href="/tags/devops/" class="tag">DevOps</a>、<a href="/tags/networks/" class="tag">ネットワーク</a> などに関するものです。これらの分野での私の旅と洞察を探求してください。ごゆっくりお楽しみください。
+		</p>
+	</section>
+	<section aria-label="ブログ投稿リスト" class="mt-16">
+		<h2 class="title mb-4 text-xl">投稿</h2>
+		<ul class="space-y-4">
+			{
+				allPostsByDate.map((p) => (
+					<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
+						<PostPreview post={p} />
+					</li>
+				))
+			}
+		</ul>
+	</section>
+	<section aria-label="ソーシャルリスト" class="mt-16">
+		<SocialList />
+	</section>
+</PageLayout>

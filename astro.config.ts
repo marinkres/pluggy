@@ -15,7 +15,7 @@ import { remarkReadingTime } from "./src/utils/remark-reading-time";
 export default defineConfig({
 	i18n: {
 		defaultLocale: 'en',
-		locales: ['en', 'hr'],
+		locales: ['en', 'jp'],
 		routing: {
 		  prefixDefaultLocale: false
 		}

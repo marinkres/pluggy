@@ -2,7 +2,7 @@
 import { languages } from '../i18n/utils';
 
 const { pathname } = Astro.url;
-const currentPath = pathname.replace(/^\/(hr\/)?/, '/');
+const currentPath = pathname.replace(/^\/(jp\/)?/, '/');
 ---
 
 <div class="language-switch">
@@ -16,7 +16,7 @@ const currentPath = pathname.replace(/^\/(hr\/)?/, '/');
         href={path}
         class:list={[
           'lang-link',
-          { active: lang === 'en' ? !pathname.startsWith('/hr') : pathname.startsWith(`/${lang}`) }
+          { active: lang === 'en' ? !pathname.startsWith('/jp') : pathname.startsWith(`/${lang}`) }
         ]}
       >
         {label}

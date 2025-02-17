@@ -1,11 +1,13 @@
 ---
 import { menuLinks, siteConfig } from "@/site-config";
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="mt-auto w-full pb-4 pt-20 text-center font-semibold text-gray-600 dark:text-gray-400">
-	<!-- Centered cat GIF above everything else -->
 	<div class="flex justify-center mb-4">
 		<img 
 			src="/cute-kitty-animated-gif-61.gif" 
@@ -15,7 +17,6 @@ const year = new Date().getFullYear();
 			class="pointer-events-none" 
 		/>
 	</div>
-	<!-- Footer content -->
 	<div class="flex flex-col items-center gap-y-2 sm:flex-row sm:justify-between sm:text-xs">
 		<div class="me-0 sm:me-4">
 			&copy; {siteConfig.author}
@@ -26,11 +27,15 @@ const year = new Date().getFullYear();
 			class="flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-500"
 		>
 			{
-				menuLinks.map((link) => (
-					<a class="px-4 py-2 sm:py-0 sm:hover:text-textColor sm:hover:underline" href={link.path}>
-						{link.title}
-					</a>
-				))
+				menuLinks.map((link) => {
+					const translatedPath = lang === 'en' ? link.path : `/${lang}${link.path}`;
+					return (
+						<a class="px-4 py-2 sm:py-0 sm:hover:text-textColor sm:hover:underline" 
+							href={translatedPath}>
+							{t(link.title as "nav.home" | "nav.about" | "nav.blog" | "nav.resume")}
+						</a>
+					)
+				})
 			}
 		</nav>
 	</div>

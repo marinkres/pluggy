@@ -1,6 +1,6 @@
 export const languages = {
     en: 'En',
-    hr: 'Hr'
+    jp: 'Jp'
   };
   
   export type Language = keyof typeof languages;
@@ -11,14 +11,16 @@ export const languages = {
       'nav.home': 'Home',
       'nav.about': 'About',
       'nav.blog': 'Blog',
-      'nav.resume': 'Resume(CV)'
+      'nav.resume': 'Resume(CV)',
+      'social.find': 'Find me on'
     },
-    hr: {
-      'nav.home': 'Početna',
-      'nav.about': 'O meni',
-      'nav.blog': 'Blog',
-      'nav.resume': 'Životopis'
-    }
+    jp: {
+      'nav.home': 'ホーム',
+      'nav.about': '約',
+      'nav.blog': 'ブログ',
+      'nav.resume': '履歴書',
+      'social.find': '私を見つける'
+    },
   } as const;
   
   export function getLangFromUrl(url: URL) {
