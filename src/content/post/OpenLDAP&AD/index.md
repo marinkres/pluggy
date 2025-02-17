@@ -1,6 +1,6 @@
 ---
-title: "OpenLDAP & AD Integration - Centralized User Management"
-description: "Migrating From Netlify to Azure: A Cloud Journey to Enhance My Blog and gain more knowledge about DevOps"
+title: "OpenLDAP / AD Integration - Centralized User Management"
+description: "Integrating Windows Active Directory and OpenLDAP through Samba Server: Technological Solution for Heterogeneous Network Infrastructures"
 publishDate: "27 jan 2025"
 tags: ["ad", "linux", "lab"]
 updatedDate: 27 jan 2025
