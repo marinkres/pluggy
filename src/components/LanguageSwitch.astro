@@ -6,40 +6,34 @@ const currentPath = pathname.replace(/^\/(jp\/)?/, '/');
 ---
 
 <div class="language-switch">
-  {Object.entries(languages).map(([lang, label]) => {
+  {Object.entries(languages).map(([lang, label], index) => {
     const path = lang === 'en' 
-      ? currentPath // For English, use path without prefix
-      : `/${lang}${currentPath}`; // For other languages, add prefix
+      ? currentPath
+      : `/${lang}${currentPath}`;
     
     return (
-      <a 
-        href={path}
-        class:list={[
-          'lang-link',
-          { active: lang === 'en' ? !pathname.startsWith('/jp') : pathname.startsWith(`/${lang}`) }
-        ]}
-      >
-        {label}
-      </a>
+      <>
+        <a 
+          href={path}
+          class:list={[
+            'lang-link',
+            { active: lang === 'en' ? !pathname.startsWith('/jp') : pathname.startsWith(`/${lang}`) }
+          ]}
+        >
+          {label}
+        </a>
+        {index === 0 && <span class="separator">/</span>}
+      </>
     );
   })}
 </div>
+
 <style>
     .language-switch {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem 1rem;
-    }
-  
-    .lang-label {
-      font-weight: bold;
-    }
-  
-    .lang-options {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
   
     .lang-link {
@@ -52,6 +46,7 @@ const currentPath = pathname.replace(/^\/(jp\/)?/, '/');
     }
   
     .separator {
+      margin: 0 0.25rem;
       color: inherit;
     }
-  </style>
+</style>

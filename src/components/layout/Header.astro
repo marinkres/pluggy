@@ -25,29 +25,38 @@ const url = new URL(Astro.request.url);
 	class="absolute -inset-x-4 top-14 hidden flex-col items-center justify-center gap-y-4 rounded-md bg-bgColor/[.85] py-4 text-accent shadow backdrop-blur group-[.menu-open]:z-50 group-[.menu-open]:flex sm:static sm:z-auto sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent sm:rounded-none sm:bg-transparent sm:py-0 sm:shadow-none sm:backdrop-blur-none outline outline-2 outline-accent sm:outline-none"
 	id="navigation-menu"
 >
-	{
-		menuLinks.map((link) => {
-			const translatedPath = lang === 'en' ? link.path : `/${lang}${link.path}`;
-			const titleKey = link.title as "nav.home" | "nav.about" | "nav.blog" | "nav.resume";
-			return (
-				<a
-					aria-current={url.pathname === translatedPath ? "page" : false}
-					class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline"
-					data-astro-prefetch
-					href={translatedPath}
-				>
-					{t(titleKey)}
-				</a>
-			)
-		})
-	}
+	<!-- Navigation links in a row for both mobile and desktop -->
+	<div class="flex flex-row items-center gap-x-4 sm:divide-x sm:divide-dashed sm:divide-accent">
+		{
+			menuLinks.map((link) => {
+				const translatedPath = lang === 'en' ? link.path : `/${lang}${link.path}`;
+				const titleKey = link.title as "nav.home" | "nav.about" | "nav.blog" | "nav.resume";
+				return (
+					<a
+						aria-current={url.pathname === translatedPath ? "page" : false}
+						class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline"
+						data-astro-prefetch
+						href={translatedPath}
+					>
+						{t(titleKey)}
+					</a>
+				)
+			})
+		}
+	</div>
+
 	<!-- Divider line for mobile -->
-	<div class="h-px w-4/5 bg-accent/20 sm:hidden"></div>
-	<!-- Language switch for mobile -->
-	<div class="sm:hidden w-full flex justify-center">
-		<LanguageSwitch />
+	<div class="h-px w-4/5 bg-accent/20 sm:hidden mt-4 mb-2"></div>
+
+	<!-- Language switch section for mobile -->
+	<div class="sm:hidden flex flex-col items-center gap-y-2">
+		<span class="font-semibold">Language:</span>
+		<div class="flex items-center gap-x-2">
+			<LanguageSwitch />
+		</div>
 	</div>
 </nav>
+
 	</div>
 	<Search />
 	<ThemeToggle />
