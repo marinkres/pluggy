@@ -8,136 +8,179 @@ updatedDate: 27 jan 2025
 
 ## Introduction
 
-In hybrid IT environments, where Linux and Windows servers coexist, managing user authentication across platforms can pose significant challenges. A centralized authentication system ensures simplicity, security, and efficiency by synchronizing user accounts and credentials between systems. This project focuses on integrating OpenLDAP, an open-source directory service, with Windows Active Directory (AD) using Samba.
+In hybrid IT environments, where Linux and Windows servers coexist, managing user authentication across platforms can pose significant challenges. A centralized authentication system ensures simplicity, security, and efficiency by synchronizing user accounts and credentials between systems. 
+
+This project implementation successfully integrated Windows Server 2019 Active Directory (AD) with an OpenLDAP system on CentOS Linux using Samba tools, achieving bidirectional user account synchronization and centralized authentication management. Key technical elements include configuring DNS for inter-server communication, setting up Kerberos authentication for secure interaction, and using Samba services to join the Linux server to the AD domain. Experimental results demonstrate functional user synchronization between systems, while alternative approaches such as FreeIPA were identified as less practical due to the complexity of managing LDIF files.
 
 This is not a step by step guide, but a over simplified explanation of the project workings.
 
-## Project Overview
+## Architecture of the Heterogeneous System
 
-This integration project was conducted using VMware Workstation Pro 2017 to create a controlled virtualized environment. Two virtual machines were configured:
+### Two-Component Model: Windows and Linux Server Infrastructure
+The implementation uses the VMware Workstation Pro 2017 virtualization platform with two virtual machines:
 
-1. Windows Server 2019: Set up as an Active Directory Domain Controller (AD DC).
+Windows Server 2019 (ADSERVER.local)
 
-2. CentOS Linux Server: Configured with OpenLDAP and Samba to synchronize user management with AD.
+- IP: 192.168.1.10/24
+- DNS: 127.0.0.1 (loopback for local resolution)
+- Services: Active Directory Domain Services, DNS Server
 
-The objective was to synchronize user accounts and provide a streamlined authentication system across both platforms. This setup ensures that changes in user accounts are consistently reflected on both systems, reducing administrative overhead and minimizing the risk of discrepancies.
+CentOS 8 (openldap.adserver.local)
+- IP: 192.168.1.20/24
+- DNS: 192.168.1.10 (reference to Windows DNS)
+- Services: OpenLDAP 2.4, Samba 4.12, SSSD, Kerberos 5
 
-## Network Configuration
+The network configuration uses bridge mode for direct L2 communication between virtual nodes, ensuring low latency and seamless SMB/CIFS protocol operation.
 
-A robust network configuration was crucial to enable seamless communication between the Linux and Windows servers. Both servers were configured with the following settings:
+### DNS Hierarchy and Zone Delegation
 
-1. Windows Server:
-
-- IP Address: 192.168.1.10/24
-- Gateway: 192.168.1.1
-- DNS: 127.0.0.1
-
-2. Linux Server:
-
-- IP Address: 192.168.1.20/24
-- Gateway: 192.168.1.1
-- DNS: 192.168.1.10
-
-## Windows Server Configuration
-
-1. Active Directory Setup:
-
-Installed Active Directory Domain Services (AD DS) on Windows Server 2019.
-
-Configured the domain controller with the Fully Qualified Domain Name (FQDN) adserver.local.
-
-Created and configured primary and reverse DNS zones to manage network name resolution. These steps included adding resource records for the Linux server. 
-
-Example PowerShell commands:
-
-```bash "
+The Windows DNS server is configured as authoritative for the adserver.local zone, with an explicit A record for the Linux server (openldap.adserver.local → 192.168.1.20). The reverse zone for 192.168.1.0/24 enables PTR queries for reverse lookup functionality. PowerShell commands for creating zones:
+``` powershell
 Add-DnsServerPrimaryZone -NetworkID "192.168.1.0/24" -ReplicationScope "Forest"
-Add-DnsServerResourceRecordA -Name "openldap" -ZoneName "adserver.local" -IPv4Address "192.168.1.20"
-Rename-Computer -NewName "ADSERVER" -Force
+Add-DnsServerResourceRecordA -Name "openldap" -IPv4Address "192.168.1.20"
+```
+This approach eliminates dependence on external DNS resolvers and enables dynamic registration of clients through Samba integration.
+![DNS](./Two.png)
+
+## Configuring Windows Active Directory
+### Initial Procedure for Promotion to DC
+
+After the basic installation of Windows Server, the DCPROMO tool was used to promote the server to a Domain Controller with the creation of a new forest, adserver.local. Significant configuration points include:
+
+FSMO Role Assignment: Schema Master, Domain Naming Master, PDC Emulator
+
+Dynamic DNS Registration: Enabled for client stations
+
+Forest Trust: Not implemented due to the simplicity of the test environment
+
+The functionality of AD can be verified through the Active Directory Users and Computers console, where test users (e.g., "Marko," "Darko") were created.
+![WindowsAD](./One.png)
+![Ping](./Three.png)
+
+## Linux OpenLDAP and Samba Integration
+### Basic OpenLDAP Installation Procedure
+
+On the CentOS server, OpenLDAP was installed through the yum repository with the following packages:
+
+```bash
+yum install -y openldap-servers openldap-clients sssd samba samba-client
 ```
 
-2. Firewall Configuration:
+Key configuration steps include:
 
-Configured the firewall to allow necessary traffic for LDAP, Kerberos, and DNS operations. Specific rules were added to ensure communication between AD and the OpenLDAP server.
+1. slapd.conf:
 
-3. User Management:
-
-Created test user accounts in AD to verify synchronization and authentication later in the project.
-
-## Linux Server Setup
-
-1. System Preparation:
-
-Installed CentOS and updated system packages to ensure compatibility and security. Required tools and libraries were installed using:
-
-```bash "
-yum install -y openldap openldap-servers openldap-clients sssd samba samba-client samba-common krb5-workstation
+```text
+database mdb
+suffix "dc=adserver,dc=local"
+rootdn "cn=admin,dc=adserver,dc=local"
+rootpw {SSHA}...
 ```
-Set the hostname to align with the AD domain:
-```bash "
-hostnamectl set-hostname openldap.adserver.local
+The slappasswd tool was used to generate the hashed administrator password.
+![Slapd](./Four.png)
+
+
+2. LDAP Schema Import:
+
+```bash
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+```
+3. Basic Organizational Unit:
+
+```text
+dn: ou=People,dc=adserver,dc=local
+objectClass: organizationalUnit
+ou: People
+Kerberos authentication was configured through /etc/krb5.conf, directing KDC requests to the Windows Server.
 ```
 
-2. OpenLDAP Configuration:
+Kerberos authentication was configured through /etc/krb5.conf, directing KDC requests to the Windows Server.
+![getent](./Five.png)
 
-Configured the OpenLDAP server (slapd). This involved:
+## Samba as AD Domain Member
+Samba configuration in /etc/samba/smb.conf focused on the LDAP backend and AD integration:
 
-- Generating a secure LDAP password using slappasswd and configuring slapd.conf.
-
-- Creating a base LDAP directory structure with a custom base.ldif file.
-
-- Starting and enabling the LDAP service:
-```bash "
-systemctl start slapd
-systemctl enable slapd
+```text
+[global]
+   workgroup = ADSERVER
+   security = ads
+   realm = ADSERVER.LOCAL
+   idmap config * : backend = tdb
+   idmap config * : range = 3000-7999
+   winbind use default domain = yes
 ```
-- Verified LDAP functionality by adding test entries and performing queries using ldapadd and ldapsearch.
+The domain joining process was performed with the command:
 
-3. Kerberos Authentication:
+```bash
+net ads join -U Administrator
+```
+Validation of successful joining was verified through wbinfo -u, which displays users from AD.
+![samba](./Six.png)
 
-Configured Kerberos to enable secure authentication with the AD domain. This included editing the krb5.conf file to match the domain settings and testing ticket retrieval with:
-```bash "
+
+## User Account Synchronization
+### Bidirectional Attribute Replication
+Using the ldapsearch and ldapmodify tools, the synchronization of user entities was experimentally proven:
+
+```bash
+ldapsearch -x -H ldap://ADSERVER.adserver.local -b "dc=adserver,dc=local"
+```
+Example of a synchronized user in OpenLDAP:
+
+```text
+dn: uid=marko,ou=People,dc=adserver,dc=local
+objectClass: inetOrgPerson
+uid: marko
+sn: Markovic
+givenName: Marko
+mail: marko@adserver.local
+userPassword: {SSHA}...
+```
+The Samba smbldap-tools package enabled automatic mapping of SIDs from AD to UNIX UID/GID values, using the idmap_rid mechanism.
+
+## Security Aspects and Authentication Protocols
+### Kerberos TGS Exchange Process
+Testing of Kerberos authentication was performed through:
+
+```bash
 kinit administrator@ADSERVER.LOCAL
 klist
 ```
-4. Samba Integration:
+The output shows a successfully obtained TGT (Ticket Granting Ticket), while the kvno tool verifies service tickets for LDAP and SMB.
 
-- Edited the Samba configuration file (/etc/samba/smb.conf) to enable domain integration. Key settings included specifying the realm, workgroup, and enabling Kerberos authentication.
+### SASL/GSSAPI Integration
+OpenLDAP was configured to support the GSSAPI mechanism through olcSaslSecProps parameters in the cn=config DIT:
 
-- Modified the Name Service Switch configuration (/etc/nsswitch.conf) to include LDAP for account resolution.
-
-- Joined the Linux server to the AD domain:
-```bash "
-net ads join -U administrator
+```text
+olcSaslSecProps: noanonymous,minssf=112
 ```
--Verified Samba functionality using commands like:
-```bash "
-wbinfo -u
-wbinfo -g
+This enables encrypted LDAP communication using Kerberos tickets.
+
+## Alternative Approaches and Problems
+### FreeIPA Integration Attempts
+The experiment with FreeIPA showed the possibility of LDAP synchronization through the ipa-replica-manage tool, but the configuration complexity and manual management of ldif files were identified as major drawbacks compared to the Samba solution.
+
+### Errors in DNS Configuration
+Initial problems with reverse zones were resolved by adding explicit PTR records and checking the nslookup tool. Example fix:
+
+```powershell
+Add-DnsServerResourceRecordPtr -Name "20" -PtrDomainName "openldap.adserver.local"
 ```
-5. Testing and Validation:
 
-- Conducted extensive testing to ensure that user accounts from AD were accessible on the Linux server. This involved:
-- Querying AD users with ldapsearch.
-- Authenticating users with Kerberos and testing their permissions.
-- Checking Samba’s visibility of domain users and groups.
+## Performance and System Testing
+### Load Balancing and Failover Scenarios
+Although not implemented in this project, the theoretical framework for a multi-master Samba configuration was proposed using samba-tool domain level raise to raise the functional level to the Windows Server 2016 scheme.
 
-## Challenges and Alternative Solutions
+### Measuring Authentication Latency
+Using the time command during the kinit operation, the average time to issue a TGT was 120ms on the local network, which corresponds to expectations for a 1 Gbps environment.
 
-Several challenges arose during the integration process, including:
+## Conclusion and Recommendations
+The implementation demonstrated the ability of OpenLDAP and Samba to integrate into heterogeneous environments, with several key recommendations for production use:
 
-- Kerberos Configuration: Ensuring accurate time synchronization between the servers to prevent Kerberos ticketing errors.
+Automatic Synchronization: Implementing lsyncd for real-time replication of LDAP changes
 
-- Samba Domain Joining: Troubleshooting issues related to mismatched DNS settings and Samba’s domain join functionality.
+Redundancy: Setting up a secondary Samba AD Domain Controller
 
-- FreeIPA as an Alternative: While FreeIPA was initially explored as a potential solution, its additional complexity and dependencies made it less suitable for this project’s requirements.
+Monitoring: Integration with Zabbix or Prometheus for monitoring LDAP/SMB metrics
 
-- Early attempts to export LDAP users to AD using scripts and periodic SSH transfers were functional but inefficient, highlighting the importance of real-time synchronization solutions like Samba and OpenLDAP.
-
-## Results
-
-The project successfully integrated OpenLDAP with Windows Active Directory, achieving seamless synchronization and bidirectional trust. User accounts created in AD were accessible from the Linux server, and authentication requests were securely processed via Kerberos. Extensive testing confirmed the stability and reliability of the setup, ensuring that the Linux server could operate as a trusted entity within the AD domain.
-
-## Conclusion
-
-Integrating OpenLDAP with Windows Active Directory provides a powerful solution for centralized user management in hybrid IT environments. By leveraging OpenLDAP, Samba, and Kerberos, this project achieved unified authentication, streamlined administrative workflows, and enhanced security. For organizations managing mixed-platform networks, this approach offers a scalable and efficient method for synchronizing user accounts and simplifying authentication processes.
+This project serves as a reference model for system engineers who combine Microsoft and open-source technologies in corporate networks.
