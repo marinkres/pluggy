@@ -1,9 +1,12 @@
 ---
 import { menuLinks } from "@/site-config";
-
+import LanguageSwitch from '../LanguageSwitch.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import Search from "../Search.astro";
 import ThemeToggle from "../ThemeToggle.astro";
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const url = new URL(Astro.request.url);
 ---
 
@@ -12,9 +15,9 @@ const url = new URL(Astro.request.url);
 		<a
 			aria-current={url.pathname === "/" ? "page" : false}
 			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block mb-2"
-			href="/"
+			href={lang === 'en' ? "/" : `/${lang}/`}
 		>
-		<span class="text-xl font-bold sm:text-2xl">>Marin_Kresic</span>
+			<span class="text-xl font-bold sm:text-2xl">>Marin_Kresic</span>
 		</a>
 		<nav
 			aria-label="Main menu"
@@ -22,21 +25,25 @@ const url = new URL(Astro.request.url);
 			id="navigation-menu"
 		>
 			{
-				menuLinks.map((link) => (
-					<a
-						aria-current={url.pathname === link.path ? "page" : false}
-						class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline"
-						data-astro-prefetch
-						href={link.path}
-					>
-						{link.title}
-					</a>
-				))
+				menuLinks.map((link) => {
+					const translatedPath = lang === 'en' ? link.path : `/${lang}${link.path}`;
+					return (
+						<a
+							aria-current={url.pathname === translatedPath ? "page" : false}
+							class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline"
+							data-astro-prefetch
+							href={translatedPath}
+						>
+							{t(link.title as "nav.home" | "nav.about" | "nav.blog" | "nav.resume")}
+						</a>
+					)
+				})
 			}
 		</nav>
 	</div>
 	<Search />
 	<ThemeToggle />
+	<LanguageSwitch />
 	<mobile-button>
 		<button
 			aria-expanded="false"
@@ -57,8 +64,7 @@ const url = new URL(Astro.request.url);
 				viewBox="0 0 24 24"
 				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path d="M3.75 9h16.5m-16.5 6.75h16.5" stroke-linecap="round" stroke-linejoin="round"
-				></path>
+				<path d="M3.75 9h16.5m-16.5 6.75h16.5" stroke-linecap="round" stroke-linejoin="round"></path>
 			</svg>
 			<svg
 				aria-hidden="true"

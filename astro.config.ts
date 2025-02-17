@@ -13,6 +13,13 @@ import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
 // https://astro.build/config
 export default defineConfig({
+	i18n: {
+		defaultLocale: 'en',
+		locales: ['en', 'hr'],
+		routing: {
+		  prefixDefaultLocale: false
+		}
+	  },
 	image: {
 		domains: ["webmention.io"],
 	},

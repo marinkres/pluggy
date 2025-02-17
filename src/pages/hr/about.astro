@@ -1,0 +1,172 @@
+---
+import aboutImg from "@/assets/about-astro.png";
+import PageLayout from "@/layouts/Base.astro";
+import SocialList from "@/components/SocialList.astro";
+
+const meta = {
+  description: "About Page - MarinKresic Blog",
+  title: "About",
+};
+
+const cactusTech = [
+{
+    desc: "Azure Storage for static website hosting.",
+    href: "https://azure.microsoft.com/en-us/services/storage/",
+    title: "Azure Storage",
+  },
+  {
+    desc: "HTTPS security using Azure CDN.",
+    href: "https://azure.microsoft.com/en-us/services/cdn/",
+    title: "Azure CDN",
+  },
+  {
+    desc: "Custom domain management via DNS.",
+    href: "https://azure.microsoft.com/en-us/services/dns/",
+    title: "Azure DNS",
+  },
+  {
+    desc: "Azure Functions for API implementation.",
+    href: "https://azure.microsoft.com/en-us/services/functions/",
+    title: "Azure Functions",
+  },
+  {
+    desc: "CosmosDB for database storage.",
+    href: "https://azure.microsoft.com/en-us/services/cosmos-db/",
+    title: "Azure CosmosDB",
+  },
+  {
+    desc: "JavaScript for client-side interactions.",
+    href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+    title: "JavaScript",
+  },
+  {
+    desc: "Python for backend development with Azure SDK.",
+    href: "https://www.python.org/",
+    title: "Python",
+  },
+  {
+    desc: "Infrastructure as Code using ARM templates.",
+    href: "https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/overview",
+    title: "Azure ARM Templates",
+  },
+  {
+    desc: "CI/CD pipelines with GitHub Actions.",
+    href: "https://github.com/features/actions",
+    title: "GitHub Actions",
+  },
+  {
+    desc: "Build fast websites, faster.",
+    href: "https://astro.build",
+    title: "Astro",
+  },
+  {
+    desc: "Markdown for the component era.",
+    href: "https://mdxjs.com/",
+    title: "MDX",
+  },
+  {
+    desc: "Generating png Open Graph images for blog posts.",
+    href: "https://github.com/vercel/satori",
+    title: "Satori",
+  },
+  {
+    desc: "A fully static search library.",
+    href: "https://pagefind.app/",
+    title: "Pagefind",
+  },
+  {
+    desc: "Highly customisable source code & syntax highlighter.",
+    href: "https://expressive-code.com/",
+    title: "Expressive Code",
+  },
+ 
+];
+---
+
+<PageLayout meta={meta}>
+  <div class="space-y-6">
+    <h1 class="title">About</h1>
+    <p>Zagreb, Croatia</p>
+    <p class="mb-4">
+      I'm Marin, a <strong>System Engineering student</strong> at Algebra Bernays University with a focus on <strong>Cybersecurity, Cloud Infrastructure, DevOps, Automation, Systems Architecture</strong> and related fields.
+    </p>
+    <p class="mb-4">
+      This blog showcases my projects, solutions, and insights in these areas. Thanks for visiting, and feel free to explore!
+    </p>
+    
+  <section class="mt-16">
+    <h4 class="title mb-4 text-xl">Tech Stack used for this website:</h4>
+    <dl class="space-y-4">
+      {cactusTech.map(({ desc, href, title }) => (
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <dt>
+            <span class="flex">
+              <a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
+                {title}
+              </a>
+              :
+            </span>
+          </dt>
+          <dd>{desc}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+  <h4 class="title mb-4 text-xl">Other:</h4>
+  <p class="mb-4">
+    Check out my mini game on itch.io:
+  </p>
+  <div>
+    <!-- Paste your itch.io embed code here -->
+      <iframe frameborder="0" src="https://itch.io/embed/3318297?linkback=true&amp;bg_color=222222&amp;fg_color=eeeeee&amp;link_color=95d3fe&amp;border_color=95d3fe" width="330" height="167"></iframe>
+      <a href="https://mkresic.itch.io/matze"></a>
+    </div>
+  <section class="mt-16 max-w-4xl mx-auto">
+    <SocialList />
+    <button class="p-1.5 tag border border-black text-black bg-transparent hover:bg-gray-100 dark:border-white dark:text-white dark:hover:bg-gray-800 mt-2">
+      <a href="https://www.buymeacoffee.com/marinkresic" target="_blank"> 🍺Buy me a beer</a>
+    </button>
+  </section>
+</PageLayout>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const textarea = document.getElementById("message") as HTMLTextAreaElement | null;
+    const maxRows = 4;
+    const form = document.getElementById("contactForm") as HTMLFormElement | null;
+    const honeypotField = form?.querySelector('input[name="honeypot"]') as HTMLInputElement | null;
+
+    if (textarea) {
+      textarea.addEventListener("input", function() {
+        const lines = textarea.value.split("\n");
+        if (lines.length > maxRows) {
+          textarea.value = lines.slice(0, maxRows).join("\n");
+        }
+      });
+
+      // Ensure the cursor starts at the beginning
+      textarea.setSelectionRange(0, 0);
+    }
+
+    if (form) {
+      form.addEventListener("submit", function(event) {
+        // Check if the honeypot field is filled
+        if (honeypotField && honeypotField.value) {
+          event.preventDefault();  // Block the form submission
+          alert("Spam detected. Please try again.");
+        } else {
+          // Remove the honeypot field if empty before submission
+          if (honeypotField) {
+            honeypotField.parentNode?.removeChild(honeypotField);
+          }
+        }
+      });
+    }
+  });
+</script>
+
+
+
+
+
