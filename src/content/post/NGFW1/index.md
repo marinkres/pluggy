@@ -1,9 +1,9 @@
 ---
-title: "NGFW.1 - GNS3 Lab Setup (Topology, Routing, NAT)"
+title: "GNS3 Full Lab Setup (Topology, Routing, NAT)"
 description: "We'll cover the essential steps for configuring routing and other fundamental settings to ensure a smooth and functional virtual lab."
 publishDate: "27 jul 2024"
 updatedDate: 27 jul 2024
-tags: ["cybersecurity", "networks", "lab", "NGFW"]
+tags: ["cybersecurity", "networks", "lab", "NGFW", "mikrotik", "cisco"]
 ---
 
 ## Introduction 

@@ -1,9 +1,9 @@
 ---
-title: "NGFW.2 - Fortinet Single Sign-On (FSSO)"
+title: "Fortinet Single Sign-On (FSSO)"
 description: "Welcome to the second edition of my NGFW lab series. SD-WAN and FSSO Comperhensive guide"
 publishDate: "10 aug 2024"
 updatedDate: 10 aug 2024
-tags: ["cybersecurity", "networks", "lab", "NGFW"]
+tags: ["cybersecurity", "networks", "lab", "NGFW", "fortinet"]
 ---
 
 Welcome to the second edition of my NGFW lab series. In our previous session, we discussed and set up the network topology using GNS3. This time, we’ll dive into configuring Fortinet Single Sign-On (FSSO) to enhance our network security and streamline user authentication.
