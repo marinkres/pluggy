@@ -29,5 +29,48 @@ const {
 			<slot />
 		</main>
 		<Footer />
+
+		<!-- Include Neko Script -->
+		<script type="module">
+			import { Neko } from "./neko"; // Adjust path if needed
+
+			window.onload = () => {
+				const headerElement = document.querySelector("header");
+
+				if (!headerElement) {
+					console.error("Header element not found.");
+					return;
+				}
+
+				const calculateNekoPosition = () => {
+					const rect = headerElement.getBoundingClientRect();
+					return {
+						x: rect.left + 10, // Position slightly to the right of the header
+						y: rect.top - 15,  // Slightly below the top of the header
+					};
+				};
+
+				const initialPosition = calculateNekoPosition();
+
+				const neko = new Neko({
+					nekoName: "myNeko",
+					nekoImageUrl: "/lucy.png", // Replace with your sprite sheet URL
+					initialPosX: initialPosition.x,
+					initialPosY: initialPosition.y,
+				});
+
+				neko.init();
+
+				const updateNekoPosition = () => {
+					const newPosition = calculateNekoPosition();
+					if (neko && typeof neko.setPosition === "function") {
+						console.log("Updating Neko position:", newPosition);
+						neko.setPosition(newPosition.x, newPosition.y);
+					}
+				};
+
+				window.addEventListener("resize", updateNekoPosition);
+			};
+		</script>
 	</body>
 </html>
