@@ -3,7 +3,7 @@ title: "Algorithmic Complacency"
 description: "Algorithmic Complacency: How Algorithms Quietly Shape Our Choices"
 publishDate: "25 feb 2025"
 updatedDate: "25 feb 2025"
-tags: ["algorithms", ]
+tags: ["algorithms", thoughts]
 ---
 
 **Algorithmic Complacency: How Algorithms Quietly Shape Our Choices**  

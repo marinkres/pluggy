@@ -4,6 +4,7 @@ description: "Welcome to an in-depth series on network design, traffic managemen
 publishDate: "26 jul 2024"
 updatedDate: 26 jul 2024
 tags: ["cybersecurity", "networks", "lab", "NGFW"]
+draft: true
 ---
 
 Welcome to an in-depth series on network design, traffic management, and security solutions. Over the coming posts, we'll be looking into a range of networking topics and practical tasks using advanced tools and technologies. This series will guide you through building and managing complex network topologies, implementing robust security measures, and optimizing network performance. Here's a sneak peek into what you can expect:
