@@ -24,11 +24,22 @@ const AXIS_THRESHOLD = 4;
 // TODO: offset neko when dragging
 export class Neko {
     constructor({ nekoName, nekoImageUrl, initialPosX, initialPosY, }) {
+        this.isMouseInside = true;
         this.isMouseMoving = false;
         this.mouseMoveTimeoutId = null;
         this.dragAnimationLastTimestamp = null;
         this.currentScratchSprite = null;
         this.handleMouseMove = (event) => {
+            // Check if mouse is within viewport
+            if (
+                event.clientX < 0 ||
+                event.clientX > window.innerWidth ||
+                event.clientY < 0 ||
+                event.clientY > window.innerHeight
+            ) {
+                return; // Ignore updates if mouse is outside the viewport
+            }
+        
             if (this.isDragging) {
                 const dx = event.clientX - this.lastMouseX;
                 const dy = event.clientY - this.lastMouseY;
@@ -37,8 +48,7 @@ export class Neko {
                 if (!this.wasDragged) {
                     if (movementDistance > MOVEMENT_THRESHOLD) {
                         this.wasDragged = true;
-                    }
-                    else {
+                    } else {
                         this.setSprite("alert", 0);
                         this.render();
                         this.lastMouseX = event.clientX;
@@ -61,12 +71,13 @@ export class Neko {
                 this.lastMouseX = event.clientX;
                 this.lastMouseY = event.clientY;
                 this.render();
-            }
-            else {
+            } else {
+                // Update mouse position only when inside viewport
                 this.mouseX = event.clientX;
                 this.mouseY = event.clientY;
             }
         };
+        
         this.handleMouseDown = (event) => {
             this.isDragging = true;
             this.wasDragged = false;
@@ -98,17 +109,17 @@ export class Neko {
         };
         this.nekoName = nekoName;
         this.nekoImageUrl = nekoImageUrl;
-        this.posX = initialPosX !== undefined ? initialPosX : NEKO_HALF_WIDTH;
-        this.posY = initialPosY !== undefined ? initialPosY : NEKO_HALF_HEIGHT;
-        this.initialPosX = initialPosX !== undefined ? initialPosX : this.posX;
-        this.initialPosY = initialPosY !== undefined ? initialPosY : this.posY;
+        this.posX = initialPosX !== undefined ? initialPosX : window.innerWidth / 2;
+        this.posY = initialPosY !== undefined ? initialPosY : window.innerHeight / 2;
+        this.initialPosX = this.posX;
+        this.initialPosY = this.posY;
         this.mouseX = 0;
         this.mouseY = 0;
         this.frameCount = 0;
         this.idleTime = 0;
         this.idleAnimation = null;
         this.idleAnimationFrame = 0;
-        this.isFollowing = true;
+        this.isFollowing = false;
         this.isReturningToOrigin = false;
         this.nekoElement = null;
         this.lastFrameTimestamp = null;
@@ -324,6 +335,17 @@ export class Neko {
         this.nekoElement.addEventListener("mousedown", this.handleMouseDown);
         document.addEventListener("mouseup", this.handleMouseUp);
         document.addEventListener("mousemove", this.handleMouseMove);
+         // Enable following when mouse enters viewport
+        document.addEventListener("mouseenter", (event) => {
+            this.isFollowing = true; // Enable following
+            this.mouseX = event.clientX; // Update mouse position
+            this.mouseY = event.clientY;
+        });
+
+        // Disable following when mouse leaves viewport
+        document.addEventListener("mouseleave", () => {
+            this.isFollowing = false; // Disable following
+        });
     }
     animationLoop() {
         const loop = (timestamp) => {
@@ -435,12 +457,13 @@ export class Neko {
         this.idleAnimationFrame += 1;
     }
     followMouse() {
+        if (!this.isMouseInside) return; // Do nothing if mouse is outside
+    
         const diffX = this.posX - this.mouseX;
         const diffY = this.posY - this.mouseY;
         const distance = Math.hypot(diffX, diffY);
         const STOP_DISTANCE = 50; // Distance from cursor where the cat stops
     
-        // If the cat is within the stopping distance, stop moving and set idle sprite
         if (distance < STOP_DISTANCE) {
             if (this.idleAnimation === null) {
                 this.setSprite("idle", 0); // Switch to idle animation
@@ -453,7 +476,6 @@ export class Neko {
         this.idleAnimation = null;
         this.idleAnimationFrame = 0;
     
-        // Determine direction of movement based on cursor position
         let direction = "";
         direction += diffY / distance > 0.5 ? "N" : "";
         direction += diffY / distance < -0.5 ? "S" : "";
