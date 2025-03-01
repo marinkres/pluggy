@@ -8,7 +8,8 @@ import Footer from "@/components/layout/Footer.astro";
 import Header from "@/components/layout/Header.astro";
 import { siteConfig } from "@/site-config";
 
-const nekoPath = `${import.meta.env.BASE_URL}neko.ts`;
+const nekoPath = `${import.meta.env.BASE_URL}scripts/neko.js`;
+
 
 
 
@@ -36,7 +37,8 @@ const {
 
 		<!-- Include Neko Script -->
 		<script type="module">
-			import { Neko } from "./src/scripts/neko.js"; // Adjust path if needed
+			import { Neko } from "../scripts/neko.js"; // Adjust path if needed
+			const nekoPath = `${import.meta.env.BASE_URL}scripts/neko.js`;
 
 			window.onload = () => {
 				const headerElement = document.querySelector("header");
