@@ -11,12 +11,12 @@ const NEKO_WIDTH = 32;
 const NEKO_HEIGHT = 32;
 const NEKO_HALF_WIDTH = NEKO_WIDTH / 2;
 const NEKO_HALF_HEIGHT = NEKO_HEIGHT / 2;
-const NEKO_SPEED = 20;
-const FRAME_RATE = 300;
+const NEKO_SPEED = 10;
+const FRAME_RATE = 100;
 const Z_INDEX = Number.MAX_SAFE_INTEGER;
 const ALERT_TIME = 3;
-const IDLE_THRESHOLD = 3;
-const IDLE_ANIMATION_CHANCE = 1 / 20;
+const IDLE_THRESHOLD = 1;
+const IDLE_ANIMATION_CHANCE = 1;
 const MIN_DISTANCE = 10;
 const SPRITE_GAP = 1;
 const BACKGROUND_TARGET_COLOR = [0, 174, 240];
@@ -108,7 +108,7 @@ export class Neko {
         this.idleTime = 0;
         this.idleAnimation = null;
         this.idleAnimationFrame = 0;
-        this.isFollowing = false;
+        this.isFollowing = true;
         this.isReturningToOrigin = false;
         this.nekoElement = null;
         this.lastFrameTimestamp = null;
@@ -438,29 +438,43 @@ export class Neko {
         const diffX = this.posX - this.mouseX;
         const diffY = this.posY - this.mouseY;
         const distance = Math.hypot(diffX, diffY);
-        if (distance < NEKO_SPEED || distance < MIN_DISTANCE) {
-            this.idleBehavior();
+        const STOP_DISTANCE = 50; // Distance from cursor where the cat stops
+    
+        // If the cat is within the stopping distance, stop moving and set idle sprite
+        if (distance < STOP_DISTANCE) {
+            if (this.idleAnimation === null) {
+                this.setSprite("idle", 0); // Switch to idle animation
+            }
+            this.resetIdleAnimation(); // Reset any running animation
             return;
         }
+    
+        // Reset idle animation since the cat is actively moving
         this.idleAnimation = null;
         this.idleAnimationFrame = 0;
-        if (this.idleTime > 1) {
-            this.setSprite("alert", 0);
-            this.idleTime = Math.min(this.idleTime, ALERT_TIME);
-            this.idleTime -= 1;
-            return;
-        }
+    
+        // Determine direction of movement based on cursor position
         let direction = "";
         direction += diffY / distance > 0.5 ? "N" : "";
         direction += diffY / distance < -0.5 ? "S" : "";
         direction += diffX / distance > 0.5 ? "W" : "";
         direction += diffX / distance < -0.5 ? "E" : "";
+    
+        // Set running animation based on direction
         this.setSprite(direction, this.frameCount);
-        this.posX -= (diffX / distance) * NEKO_SPEED;
-        this.posY -= (diffY / distance) * NEKO_SPEED;
+    
+        // Move the cat toward the cursor but stop at STOP_DISTANCE
+        const moveDistance = Math.min(NEKO_SPEED, distance - STOP_DISTANCE);
+        this.posX -= (diffX / distance) * moveDistance;
+        this.posY -= (diffY / distance) * moveDistance;
+    
+        // Ensure the cat stays within screen bounds
         this.posX = Math.min(Math.max(NEKO_HALF_WIDTH, this.posX), window.innerWidth - NEKO_HALF_WIDTH);
         this.posY = Math.min(Math.max(NEKO_HALF_HEIGHT, this.posY), window.innerHeight - NEKO_HALF_HEIGHT);
     }
+    
+    
+    
     moveToInitialPosition() {
         const diffX = this.posX - this.initialPosX;
         const diffY = this.posY - this.initialPosY;
